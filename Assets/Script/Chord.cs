@@ -4,62 +4,92 @@ using System.Collections.Generic;
 
 public class Chord : MonoBehaviour {
 
-	public Key keyPrefab;
+    public float staveOffset = -3.0f;
+    public float staveInterval = 0.5f;
+
+	public Note notePrefab;
 
 	public Vector2 speed = new Vector2 (3f, 0f);
 	public Vector2 direction = new Vector2 (-1f, 0f);
 
-	private List<Key> keys = new List<Key>();
+	private List<Note> _notes = new List<Note>();
 
-	private int keyName;
+	private int _rightNoteId;
 
-	private Vector2 movement;
+	private Vector2 _movement;
 
 	// Use this for initialization
 	void Start () {
 		transform.localPosition = new Vector3(13f, 0f, 0f);
 	}
 
-    public void generateKeys()
+    public void generateNotes()
     {
-        Key key;
-        int j = Random.Range(0, 8);
-        int rightKey = Random.Range(0, 3);
+        Note note;
+        int noteId = 0;
+        int j = Random.Range(0, 11); //The first note goes from lower A to middle D
+        int rightNotePosition = Random.Range(0, 3);
         for (int i = 0; i < 3; i++)
         {
-            key = Instantiate(keyPrefab) as Key;
-            key.transform.localPosition = new Vector3(0f, -1.5f + j * 0.5f + i * 1f, 0.0f);
-            if(j + 2*i < 0 || j + 2*i > 10 && (j + 2*i) % 2 != 0)
+            note = Instantiate(notePrefab) as Note;
+            note.transform.localPosition = new Vector3(0f, staveOffset + j * staveInterval + i * 2 * staveInterval, 0.0f);
+            if(j + 2*i < 3 || j + 2*i > 13 && (j + 2*i) % 2 == 0)
             {
-                key.setKeyOut();
+                note.setNoteOut();
             }
-            key.transform.parent = transform;
-            keys.Add(key);
-            if (i == rightKey)
+            note.transform.parent = transform;
+            _notes.Add(note);
+
+            noteId = j + 2 * i;
+
+            note.setNoteId(noteId);
+
+            if (i == rightNotePosition)
             {
-                keyName = (j + 2 * i + 1) % 7;
-                key.setRight(true);
+                _rightNoteId = noteId;
+                note.setRight(true);
             }
         }
     }
 
-	public int getRightKeyName(){
-		return keyName;
+	public int getRightNoteId(){
+		return _rightNoteId;
 	}
 
-    public List<Key> getKeys()
+    public List<Note> getNotes()
     {
-        return keys;
+        return _notes;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		movement = new Vector2 (
+		_movement = new Vector2 (
 			speed.x * direction.x,
 			speed.y * direction.y);
 	}
 
 	void FixedUpdate () {
-		GetComponent<Rigidbody2D>().velocity = movement;
+		GetComponent<Rigidbody2D>().velocity = _movement;
 	}
+
+    public bool hasNote(int noteId)
+    {
+        bool b = false;
+        foreach(Note note in _notes)
+        {
+            b = noteId == note.getNoteId() || b;
+        }
+        return b;
+    }
+
+    public void paint(int noteId, Color color)
+    {
+        foreach (Note note in _notes)
+        {
+            if (noteId == note.getNoteId())
+            {
+                note.paint(color);
+            }
+        }
+    }
 }
