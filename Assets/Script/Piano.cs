@@ -5,11 +5,11 @@ public class Piano : MonoBehaviour {
 
     public AudioClip[] keys;
 
-    private AudioSource _audioSource;
+    public AudioSource _audioSource;
 
 	// Use this for initialization
 	void Start () {
-        _audioSource = GetComponent<AudioSource>();
+		_audioSource.transform.parent = transform;
 	}
 	
 	// Update is called once per frame
@@ -21,6 +21,5 @@ public class Piano : MonoBehaviour {
     {
         _audioSource.clip = keys[key];
         _audioSource.Play();
-        //Debug.Log(keys[key]);
     }
 }

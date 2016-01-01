@@ -4,8 +4,11 @@ using System.Collections;
 public class NoteGamePlayerController : MonoBehaviour {
 
     public PlayerAvatar playerAvatarPrefab;
+	public Piano pianoPrefab;
 
     private PlayerAvatar _playerAvatar;
+
+	private Piano _piano;
 
     private int _currentNoteId = 6;//La note ou se trouve le joueur
     private int _chosenNoteId;//La dernière note choisit par le joueur
@@ -18,6 +21,8 @@ public class NoteGamePlayerController : MonoBehaviour {
 	void Start () {
         _playerAvatar = Instantiate(playerAvatarPrefab) as PlayerAvatar;
         _playerAvatar.transform.parent = transform;
+
+		_piano = Instantiate (pianoPrefab) as Piano;
 	}
 	
 	// Update is called once per frame
@@ -32,6 +37,10 @@ public class NoteGamePlayerController : MonoBehaviour {
             transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 0.5f);
             _currentNoteId--;
         }
+
+		if(Input.GetKey(KeyCode.Escape)){
+			Application.LoadLevel("_MainMenu");
+		}
 	}
 
     public PlayerAvatar getAvatar()

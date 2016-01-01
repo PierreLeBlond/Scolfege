@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 
         player.setCurrentNoteId(6);
         player.transform.parent = playGround;
-        player.transform.localPosition = new Vector3(-8, 0, 0);
+        player.transform.localPosition = new Vector3(-6, 0, 0);
 
 		generateChord ();
 	}

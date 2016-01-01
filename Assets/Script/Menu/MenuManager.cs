@@ -13,8 +13,17 @@ public class MenuManager : MonoBehaviour {
 	
 	}
 
-    public void LoadGame()
+    public void LoadNoteGame()
     {
-        Application.LoadLevel("_Scene");
+        Application.LoadLevel("_NoteGame");
     }
+
+	public void LoadSoundGame()
+	{
+		Application.LoadLevel("_SoundGame");
+	}
+
+	public void OpenProfil()
+	{
+	}
 }
