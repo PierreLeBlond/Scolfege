@@ -99,6 +99,12 @@ public class GameManager : MonoBehaviour {
 		}
 
         updateScore();
+
+
+		if(Input.GetKey(KeyCode.Escape)){
+			UserManager.Instance.addNoteGameScore(_score);
+			Application.LoadLevel("_MainMenu");
+		}
 	}
 
     private void updateScore()

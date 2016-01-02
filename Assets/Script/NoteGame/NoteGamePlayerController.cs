@@ -37,10 +37,6 @@ public class NoteGamePlayerController : MonoBehaviour {
             transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 0.5f);
             _currentNoteId--;
         }
-
-		if(Input.GetKey(KeyCode.Escape)){
-			Application.LoadLevel("_MainMenu");
-		}
 	}
 
     public PlayerAvatar getAvatar()

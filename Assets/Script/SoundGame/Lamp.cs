@@ -29,6 +29,9 @@ public class Lamp : MonoBehaviour {
 
 	public void playKey(int note){
 		_note = note;
+		if (_piano) {
+			_piano.playKey (_note);
+		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D intruder)

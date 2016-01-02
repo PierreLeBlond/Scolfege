@@ -7,6 +7,8 @@ public class SoundGamePlayerController : MonoBehaviour {
     public float speed = 1.0f;
 	public Piano pianoPrefab;
 
+	public SoundGameManager _manager;
+
     private PlayerAvatar _playerAvatar;
     private Vector3 _force;
     private Rigidbody2D rb;
@@ -14,6 +16,8 @@ public class SoundGamePlayerController : MonoBehaviour {
 	private Piano _piano;
 
 	private int _nbJump = 0;
+
+	private bool _hasADoor = false;
 
 	// Use this for initialization
 	void Start () {
@@ -33,10 +37,6 @@ public class SoundGamePlayerController : MonoBehaviour {
 			rb.AddForce(new Vector3(0.0f, speed*30.0f, 0.0f));
 			_nbJump++;
 			//_piano.playKey(2*_nbJump);
-		}
-
-		if(Input.GetKey(KeyCode.Escape)){
-			Application.LoadLevel("_MainMenu");
 		}
 	}
 
@@ -58,13 +58,38 @@ public class SoundGamePlayerController : MonoBehaviour {
             rb.AddForce(_force);
             transform.localScale = new Vector3(1, 1, 1);
         }
+
+		if (Input.GetKey (KeyCode.UpArrow) && _hasADoor) {
+			_manager.doorIsChosen();
+			transform.localPosition = new Vector3 (-5.0f, 4.0f, 0.0f);
+		}
         
     }
+
+	public void OnTriggerEnter2D(Collider2D intruder)
+	{
+		if (intruder.CompareTag("Door"))
+		{
+			_hasADoor = true;
+		}
+	}
+
+	public void OnTriggerExit2D(Collider2D intruder)
+	{
+		if (intruder.CompareTag("Door"))
+		{
+			_hasADoor = false;
+		}
+	}
 
     public PlayerAvatar getPlayerAvatar()
     {
         return _playerAvatar;
     }
+
+	public bool hasADoor(){
+		return false;
+	}
 
 
 }

@@ -8,12 +8,22 @@ public class SoundGameManager : MonoBehaviour {
 	public Door doorPrefab;
 	public Lamp lampPrefab;
 
+	public SoundGamePlayerController _player;
+
     private List<Line> _lines = new List<Line>();
 	private List<Door> _doors = new List<Door>();
 	private List<Lamp> _lamps = new List<Lamp>();
 
 	private int _firstNote;
 	private int _secondNote;
+
+	private Door _topDoor;
+	private Door _bottomDoor;
+
+	private Lamp _firstLamp;
+	private Lamp _secondLamp;
+
+	private int _score = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -54,40 +64,67 @@ public class SoundGameManager : MonoBehaviour {
 		rightSideLine.GetComponent<BoxCollider2D> ().isTrigger = false;
 		_lines.Add (rightSideLine);
 
-		Door bottomDoor = Instantiate (doorPrefab) as Door;
-		bottomDoor.transform.localPosition = new Vector3 (6.0f, -1.0f, 0.0f);
-		_doors.Add (bottomDoor);
+		_bottomDoor = Instantiate (doorPrefab) as Door;
+		_bottomDoor.transform.localPosition = new Vector3 (6.0f, -1.0f, 0.0f);
+		_doors.Add (_bottomDoor);
 
-		Door topDoor = Instantiate (doorPrefab) as Door;
-		topDoor.transform.localPosition = new Vector3 (6.0f, 3.0f, 0.0f);
-		_doors.Add (topDoor);
+		_topDoor = Instantiate (doorPrefab) as Door;
+		_topDoor.transform.localPosition = new Vector3 (6.0f, 3.0f, 0.0f);
+		_doors.Add (_topDoor);
 
-		Lamp firstLamp = Instantiate (lampPrefab) as Lamp;
-		firstLamp.transform.localPosition = new Vector3 (-6.0f, 0.72f, 0.0f);
-		_lamps.Add (firstLamp);
+		_firstLamp = Instantiate (lampPrefab) as Lamp;
+		_firstLamp.transform.localPosition = new Vector3 (-6.0f, 0.72f, 0.0f);
+		_lamps.Add (_firstLamp);
 
-		Lamp secondLamp = Instantiate (lampPrefab) as Lamp;
-		secondLamp.transform.localPosition = new Vector3 (0.6f, 0.72f, 0.0f);
-		_lamps.Add (secondLamp);
+		_secondLamp = Instantiate (lampPrefab) as Lamp;
+		_secondLamp.transform.localPosition = new Vector3 (0.6f, 0.72f, 0.0f);
+		_lamps.Add (_secondLamp);
 
-		_firstNote = Random.Range(1, 14);
-		_secondNote = _firstNote;
+		_secondNote = Random.Range(1, 14);
+		generateLevel ();
+
+	}
+
+	void generateLevel(){
+		_firstNote = _secondNote;
 		while (_secondNote == _firstNote) {
 			_secondNote = Random.Range(0, 15);
 		}
 		if (_secondNote > _firstNote) {
-			topDoor.setIsRight (true);
+			_topDoor.setIsRight (true);
+			_bottomDoor.setIsRight (false);
 		} else {
-			bottomDoor.setIsRight (true);
+			_topDoor.setIsRight (false);
+			_bottomDoor.setIsRight (true);
 		}
-
-		firstLamp.playKey (_firstNote);
-		secondLamp.playKey (_secondNote);
+		
+		_firstLamp.playKey (_firstNote);
+		_secondLamp.playKey (_secondNote);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKey(KeyCode.Escape)){
+			UserManager.Instance.addSoundGameScore(_score);
+			Application.LoadLevel("_MainMenu");
+		}
+	}
+
+	public void doorIsChosen(){
+		if (_player.transform.position.y > 0) {
+			if (_secondNote > _firstNote) {
+				_score++;
+			} else {
+				_score--;
+			}
+		} else {
+			if (_secondNote > _firstNote) {
+				_score--;
+			} else {
+				_score++;
+			}
+		}
+		generateLevel ();
 	}
 
 
