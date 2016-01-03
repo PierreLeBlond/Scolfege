@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour {
 	public Chord chordPrefab;
     public NoteGamePlayerController player;
 
+	public Key keyPrefab;
+
 	public Transform backGround;
 	public Transform playGround;
     public Transform forGround;
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour {
 	private List<Line> _lines = new List<Line>();
 	private Square _square;
 	private Chord _chord;
+	private Key _key;
 
     private int _numberOfChord = 0;
 
@@ -31,6 +34,9 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		_key = Instantiate (keyPrefab) as Key;
+
 		Line line;
 		for (int i = 0; i < 5; i++) {
 			line = Instantiate (linePrefab) as Line;
@@ -41,7 +47,7 @@ public class GameManager : MonoBehaviour {
 
         player.setCurrentNoteId(6);
         player.transform.parent = playGround;
-        player.transform.localPosition = new Vector3(-6, 0, 0);
+        player.transform.localPosition = new Vector3(-4, 0, 0);
 
 		generateChord ();
 	}
@@ -102,8 +108,7 @@ public class GameManager : MonoBehaviour {
 
 
 		if(Input.GetKey(KeyCode.Escape)){
-			UserManager.Instance.addNoteGameScore(_score);
-			Application.LoadLevel("_MainMenu");
+			quitGame();
 		}
 	}
 
@@ -120,4 +125,10 @@ public class GameManager : MonoBehaviour {
         }
         numberOfChordText.text = "/" + _numberOfChord.ToString();
     }
+
+	public void quitGame()
+	{
+		UserManager.Instance.addNoteGameScore(_score);
+		Application.LoadLevel("_MainMenu");
+	}
 }

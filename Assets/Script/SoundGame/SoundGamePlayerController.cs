@@ -18,6 +18,8 @@ public class SoundGamePlayerController : MonoBehaviour {
 	private int _nbJump = 0;
 
 	private bool _hasADoor = false;
+	private bool _hasChosenADoor = false;
+	private float _enteringDoorRatio = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +34,7 @@ public class SoundGamePlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown("space") && _nbJump < 1)
+		if (!_hasChosenADoor && Input.GetKeyDown("space") && _nbJump < 1)
 		{
 			rb.AddForce(new Vector3(0.0f, speed*30.0f, 0.0f));
 			_nbJump++;
@@ -45,23 +47,28 @@ public class SoundGamePlayerController : MonoBehaviour {
 		if (rb.velocity.y == 0.0f) {
 			_nbJump = 0;
 		}
-        
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            _force = new Vector3(-speed, 0.0f, 0.0f);
-            rb.AddForce(_force);
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            _force = new Vector3(speed, 0.0f, 0.0f);
-            rb.AddForce(_force);
-            transform.localScale = new Vector3(1, 1, 1);
-        }
 
-		if (Input.GetKey (KeyCode.UpArrow) && _hasADoor) {
-			_manager.doorIsChosen();
-			transform.localPosition = new Vector3 (-5.0f, 4.0f, 0.0f);
+		if (_hasChosenADoor) {
+			_enteringDoorRatio += 0.002f;
+			_playerAvatar.defaultSkin.GetComponent<SpriteRenderer> ().color = Color.Lerp (_playerAvatar.defaultSkin.GetComponent<SpriteRenderer> ().color, Color.clear, _enteringDoorRatio);
+		} else {
+			if (Input.GetKey(KeyCode.LeftArrow))
+			{
+				_force = new Vector3(-speed, 0.0f, 0.0f);
+				rb.AddForce(_force);
+				transform.localScale = new Vector3(-1, 1, 1);
+			}
+			else if (Input.GetKey(KeyCode.RightArrow))
+			{
+				_force = new Vector3(speed, 0.0f, 0.0f);
+				rb.AddForce(_force);
+				transform.localScale = new Vector3(1, 1, 1);
+			}
+			
+			if (Input.GetKey (KeyCode.UpArrow) && _hasADoor) {
+				_hasChosenADoor = true;
+				StartCoroutine(entersDoor());
+			}
 		}
         
     }
@@ -88,7 +95,16 @@ public class SoundGamePlayerController : MonoBehaviour {
     }
 
 	public bool hasADoor(){
-		return false;
+		return _hasADoor;
+	}
+
+	public IEnumerator entersDoor(){
+		yield return new WaitForSeconds(2);
+		_playerAvatar.defaultSkin.GetComponent<SpriteRenderer> ().color = Color.white;
+		_enteringDoorRatio = 0.0f;
+		_hasChosenADoor = false;
+		_manager.doorIsChosen();
+		transform.localPosition = new Vector3 (-5.0f, 4.0f, 0.0f);
 	}
 
 

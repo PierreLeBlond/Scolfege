@@ -26,7 +26,12 @@ public class ProfilManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKey(KeyCode.Escape)){
-			Application.LoadLevel("_MainMenu");
+			quitGame();
 		}
+	}
+
+	public void quitGame()
+	{
+		Application.LoadLevel("_MainMenu");
 	}
 }

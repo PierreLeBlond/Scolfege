@@ -105,8 +105,7 @@ public class SoundGameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKey(KeyCode.Escape)){
-			UserManager.Instance.addSoundGameScore(_score);
-			Application.LoadLevel("_MainMenu");
+			quitGame();
 		}
 	}
 
@@ -127,5 +126,10 @@ public class SoundGameManager : MonoBehaviour {
 		generateLevel ();
 	}
 
+	public void quitGame()
+	{
+		UserManager.Instance.addSoundGameScore(_score);
+		Application.LoadLevel("_MainMenu");
+	}
 
 }
