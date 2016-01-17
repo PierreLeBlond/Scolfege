@@ -1,14 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Key.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\NoteGame\GameManager.cs">
     <Files>
-      <File FileName="Assets\Script\GameManager.cs" Line="53" Column="53" />
-      <File FileName="Assets\Script\Line.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Square.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Key.cs" Line="22" Column="53" />
-      <File FileName="Assets\Script\Chord.cs" Line="12" Column="43" />
-      <File FileName="Assets\Script\Keys.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Player.cs" Line="15" Column="2" />
+      <File FileName="Assets\Script\SoundGame\SoundGamePlayerController.cs" Line="53" Column="174" />
+      <File FileName="Assets\Script\UserManager.cs" Line="65" Column="3" />
+      <File FileName="Assets\Script\Menu\MenuManager.cs" Line="18" Column="44" />
+      <File FileName="Assets\Script\SoundGame\SoundGameManager.cs" Line="126" Column="20" />
+      <File FileName="Assets\Script\NoteGame\NoteGamePlayerController.cs" Line="10" Column="2" />
+      <File FileName="Assets\Script\NoteGame\GameManager.cs" Line="14" Column="2" />
+      <File FileName="Assets\Script\Piano.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\SoundGame\Lamp.cs" Line="31" Column="16" />
+      <File FileName="Assets\Script\Chord.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\PlayerAvatar.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\SoundGame\Door.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Note.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Singleton.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Profil\ProfilManager.cs" Line="29" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

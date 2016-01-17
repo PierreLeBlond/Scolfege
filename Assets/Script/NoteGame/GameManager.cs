@@ -10,38 +10,48 @@ public class GameManager : MonoBehaviour {
 	public Chord chordPrefab;
     public NoteGamePlayerController player;
 
-	public Transform backGround;
-	public Transform playGround;
-    public Transform forGround;
+	public Key keyPrefab;
+
+	//public Transform backGround;
+	//public Transform playGround;
+    //public Transform forGround;
 
     public Text noteText;
     public Text numberOfChordText;
 	
     public Text scoreText;
 
+    public bool pause = false;
+
     private int _score = 0;
 
 	private List<Line> _lines = new List<Line>();
 	private Square _square;
 	private Chord _chord;
+	private Key _key;
 
     private int _numberOfChord = 0;
 
     private int _rightNoteId;
 
+
+
 	// Use this for initialization
 	void Start () {
+
+		_key = Instantiate (keyPrefab) as Key;
+
 		Line line;
 		for (int i = 0; i < 5; i++) {
 			line = Instantiate (linePrefab) as Line;
 			line.transform.localPosition = new Vector3(1.0f, (i-1)*1.0f, 0.0f);
-            line.transform.parent = forGround.parent;
+            //line.transform.parent = forGround.parent;
 			_lines.Add(line);
 		}
 
         player.setCurrentNoteId(6);
-        player.transform.parent = playGround;
-        player.transform.localPosition = new Vector3(-8, 0, 0);
+        //player.transform.parent = playGround;
+        player.transform.localPosition = new Vector3(-4, 0, 0);
 
 		generateChord ();
 	}
@@ -49,7 +59,7 @@ public class GameManager : MonoBehaviour {
 	void generateChord () {
         _numberOfChord++;
         _chord = Instantiate (chordPrefab) as Chord;
-		_chord.transform.parent = playGround.transform;
+		//_chord.transform.parent = playGround.transform;
         _chord.generateNotes();
         _rightNoteId = _chord.getRightNoteId();
         noteText.text = Notes.getString(_rightNoteId);
@@ -99,6 +109,26 @@ public class GameManager : MonoBehaviour {
 		}
 
         updateScore();
+
+
+		if(Input.GetKey(KeyCode.Escape)){
+			quitGame();
+		}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("coucou");
+            if (pause)
+            {
+                pause = false;
+                _chord.pause = false;
+            }
+            else
+            {
+                pause = true;
+                _chord.pause = true;
+            }
+        }
+
 	}
 
     private void updateScore()
@@ -114,4 +144,10 @@ public class GameManager : MonoBehaviour {
         }
         numberOfChordText.text = "/" + _numberOfChord.ToString();
     }
+
+	public void quitGame()
+	{
+		UserManager.Instance.addNoteGameScore(_score);
+		Application.LoadLevel("_MainMenu");
+	}
 }
