@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\Bar.cs" />
      <Compile Include="Assets\Script\Chord.cs" />
      <Compile Include="Assets\Script\Key.cs" />
      <Compile Include="Assets\Script\Line.cs" />
@@ -53,16 +54,20 @@
      <Compile Include="Assets\Script\Note.cs" />
      <Compile Include="Assets\Script\NoteGame\GameManager.cs" />
      <Compile Include="Assets\Script\NoteGame\NoteGamePlayerController.cs" />
+     <Compile Include="Assets\Script\NoteLinePrefab.cs" />
      <Compile Include="Assets\Script\Notes.cs" />
      <Compile Include="Assets\Script\Piano.cs" />
      <Compile Include="Assets\Script\PlayerAvatar.cs" />
      <Compile Include="Assets\Script\Profil\ProfilManager.cs" />
+     <Compile Include="Assets\Script\Score.cs" />
      <Compile Include="Assets\Script\Singleton.cs" />
      <Compile Include="Assets\Script\SoundGame\Door.cs" />
      <Compile Include="Assets\Script\SoundGame\Lamp.cs" />
      <Compile Include="Assets\Script\SoundGame\SoundGameManager.cs" />
      <Compile Include="Assets\Script\SoundGame\SoundGamePlayerController.cs" />
      <Compile Include="Assets\Script\Square.cs" />
+     <Compile Include="Assets\Script\Tuto\TutoManager.cs" />
+     <Compile Include="Assets\Script\Tuto\TutoPlayerController.cs" />
      <Compile Include="Assets\Script\UserManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

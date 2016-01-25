@@ -12,25 +12,29 @@ public class GameManager : MonoBehaviour {
 
 	public Key keyPrefab;
 
-	public Transform backGround;
-	public Transform playGround;
-    public Transform forGround;
+	public Bar barPrefab;
+
+	//public Transform backGround;
+	//public Transform playGround;
+    //public Transform forGround;
 
     public Text noteText;
-    public Text numberOfChordText;
-	
-    public Text scoreText;
 
-    private int _score = 0;
+	public bool pause = false;
+
+	public Score _score;
 
 	private List<Line> _lines = new List<Line>();
 	private Square _square;
 	private Chord _chord;
 	private Key _key;
+	private Bar _bar;
 
     private int _numberOfChord = 0;
 
     private int _rightNoteId;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -41,21 +45,22 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < 5; i++) {
 			line = Instantiate (linePrefab) as Line;
 			line.transform.localPosition = new Vector3(1.0f, (i-1)*1.0f, 0.0f);
-            line.transform.parent = forGround.parent;
+            //line.transform.parent = forGround.parent;
 			_lines.Add(line);
 		}
 
         player.setCurrentNoteId(6);
-        player.transform.parent = playGround;
-        player.transform.localPosition = new Vector3(-4, 0, 0);
+        //player.transform.parent = playGround;
+        player.transform.localPosition = new Vector3(-2, 0, 0);
 
 		generateChord ();
 	}
 
 	void generateChord () {
-        _numberOfChord++;
+        _score.oneMoreChord();
         _chord = Instantiate (chordPrefab) as Chord;
-		_chord.transform.parent = playGround.transform;
+		_bar = Instantiate (barPrefab) as Bar;
+		//_chord.transform.parent = playGround.transform;
         _chord.generateNotes();
         _rightNoteId = _chord.getRightNoteId();
         noteText.text = Notes.getString(_rightNoteId);
@@ -68,67 +73,65 @@ public class GameManager : MonoBehaviour {
         {
             int chosenNoteId = player.getChosenNoteId();
 
-            if (!_chord.hasNote(chosenNoteId))
-            {
-                player.getAvatar().showAss();
-            }
-            else
-            {
-                if (chosenNoteId == _rightNoteId)
-                {
-                    _score++;
-                    if (_score == 0)
-                    {
-                        player.getAvatar().setIsWinning(true);
-                    }
-                    player.getAvatar().win();
-                    _chord.paint(_rightNoteId, Color.green);
-                }
-                else
-                {
-                    _score--;
-                    if (_score < 0)
-                    {
-                        player.getAvatar().setIsWinning(false);
-                    }
-                    player.getAvatar().loose();
-                    _chord.paint(_rightNoteId, Color.blue);
-                    _chord.paint(chosenNoteId, Color.red);
-                }   
-            }
+			switch(_chord.checkPickedNote(chosenNoteId)){
+			case (Chord.Result.None) :
+				player.getAvatar().showAss();
+				break;
+			case (Chord.Result.Win) :
+				//_score.setScore(_score.getScore()+1);
+				if (_score.getScore() + 1 == 0)
+				{
+					player.getAvatar().setIsWinning(true);
+				}
+				player.getAvatar().win();
+				break;
+			case (Chord.Result.Loose) :
+				_score.setScore(_score.getScore()-1);
+				if (_score.getScore() < 0)
+				{
+					player.getAvatar().setIsWinning(false);
+				}
+				player.getAvatar().loose();
+				break;
+			default:
+				break;
+			}
+			_chord.speed = new Vector2(1.5f, 0f);
             player.setHasANote(false);
         }
 
 		if (Input.GetKeyDown (KeyCode.R) || _chord.transform.position.x < -10f) {
 			Destroy (_chord.gameObject);
+			Destroy (_bar.gameObject);
 			generateChord();    
 		}
 
-        updateScore();
+        _score.updateScore();
 
 
 		if(Input.GetKey(KeyCode.Escape)){
 			quitGame();
 		}
-	}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("coucou");
+            if (pause)
+            {
+                pause = false;
+                _chord.pause = false;
+            }
+            else
+            {
+                pause = true;
+                _chord.pause = true;
+            }
+        }
 
-    private void updateScore()
-    {
-        scoreText.text = _score.ToString();
-        if (_score < 0)
-        {
-            scoreText.color = Color.red;
-        }
-        else
-        {
-            scoreText.color = Color.white;
-        }
-        numberOfChordText.text = "/" + _numberOfChord.ToString();
-    }
+	}
 
 	public void quitGame()
 	{
-		UserManager.Instance.addNoteGameScore(_score);
+		UserManager.Instance.addNoteGameScore(_score.getScore());
 		Application.LoadLevel("_MainMenu");
 	}
 }
