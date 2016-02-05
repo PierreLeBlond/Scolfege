@@ -15,6 +15,8 @@ public class NoteGamePlayerController : MonoBehaviour {
 
     private bool _hasANote = false;//Si le joueur à choisit une note
     private bool _hasTheRightNote = false;
+
+	private float _autoFire;
     
 
 	// Use this for initialization
@@ -27,15 +29,17 @@ public class NoteGamePlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && _currentNoteId < 14)
+        if (Input.GetKey(KeyCode.UpArrow) && _currentNoteId < 14 && Time.time - _autoFire > 0.1)
         {
             transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 0.5f);
             _currentNoteId++;
+			_autoFire = Time.time;
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && _currentNoteId > 0)
-        {
-            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 0.5f);
+		else if (Input.GetKey(KeyCode.DownArrow) && _currentNoteId > 2 && Time.time - _autoFire > 0.1)
+		{
+			transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 0.5f);
             _currentNoteId--;
+			_autoFire = Time.time;
         }
 	}
 

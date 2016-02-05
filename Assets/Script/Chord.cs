@@ -29,46 +29,100 @@ public class Chord : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		transform.localPosition = new Vector3(13f, 0f, 0f);
+		transform.localPosition = new Vector3(13f, -1f, 0f);
 	}
 
-    public void generateNotes()
+    public void generateNotes(int level)
     {
         Note note;
-        int noteId = 0;
-        int j = Random.Range(2, 6); //The first note goes from lower A to middle F
-        int rightNotePosition = Random.Range(0, 3);
-		for (int i = 0; i < _numberOfNote; i++)
-        {
-            note = Instantiate(notePrefab) as Note;
-            note.transform.localPosition = new Vector3(0f, staveOffset + j * staveInterval, 0.0f);
-			int k = 0;
-            while(j < 3 - k || j > 13 + k)
-            {
-				NoteLinePrefab line = Instantiate(linePrefab) as NoteLinePrefab;
-				if(j < 3 - k)
-					line.transform.localPosition = new Vector3(0f, staveOffset + (2 - k) * staveInterval, 0f);
-				else
-					line.transform.localPosition = new Vector3(0f, staveOffset + (14 + k) * staveInterval, 0f);
-				k +=2 ;
-				line.transform.parent = transform;
-            }
-            note.transform.parent = transform;
-            _notes.Add(note);
+		int noteId = 0, j = 0, rightNotePosition = Random.Range (0, 3);
+		switch (level) {
+		case 0:
+			j = Random.Range (0, 2);
+			for (int i = 0; i < _numberOfNote; i++) {
+				note = Instantiate (notePrefab) as Note;
 
-            noteId = j;
+				noteId = 4 + j*2;
 
-            note.setNoteId(noteId);
+				note.transform.localPosition = new Vector3 (0f, staveOffset + noteId * staveInterval, 0.0f);
 
-            if (i == rightNotePosition)
-            {
-                _rightNoteId = noteId;
-                note.setRight(true);
-				_rightNote = note;
-            }
+				note.transform.parent = transform;
+				_notes.Add (note);
 
-			j = Random.Range(j+1, 14);
-        }
+				note.setNoteId (noteId);
+				
+				if (i == rightNotePosition) {
+					_rightNoteId = noteId;
+					note.setRight (true);
+					_rightNote = note;
+				}
+				
+				j = Random.Range (j + 1, 4+i);
+			}
+			break;
+		case 1:
+			j = Random.Range (3, 6);
+			for (int i = 0; i < _numberOfNote; i++) {
+				note = Instantiate (notePrefab) as Note;
+				
+				noteId = j;
+				
+				note.transform.localPosition = new Vector3 (0f, staveOffset + noteId * staveInterval, 0.0f);
+				
+				note.transform.parent = transform;
+				_notes.Add (note);
+				
+				note.setNoteId (noteId);
+				
+				if (i == rightNotePosition) {
+					_rightNoteId = noteId;
+					note.setRight (true);
+					_rightNote = note;
+				}
+				
+				j = Random.Range (j + 1, 13);
+				foreach(Note previous_note in _notes){
+					while(j%8 == previous_note.getNoteId()%8)
+						j = Random.Range (j + 1, 13);
+				}
+			}
+			break;
+		case 2:
+			j = Random.Range (2, 6); //The first note goes from lower A to middle F
+			for (int i = 0; i < _numberOfNote; i++) {
+				note = Instantiate (notePrefab) as Note;
+				note.transform.localPosition = new Vector3 (0f, staveOffset + j * staveInterval, 0.0f);
+				int k = 0;
+				while (j < 3 - k || j > 13 + k) {
+					NoteLinePrefab line = Instantiate (linePrefab) as NoteLinePrefab;
+					if (j < 3 - k)
+						line.transform.localPosition = new Vector3 (0f, staveOffset + (2 - k) * staveInterval, 0f);
+					else
+						line.transform.localPosition = new Vector3 (0f, staveOffset + (14 + k) * staveInterval, 0f);
+					k += 2;
+					line.transform.parent = transform;
+				}
+				note.transform.parent = transform;
+				_notes.Add (note);
+
+				noteId = j;
+
+				note.setNoteId (noteId);
+
+				if (i == rightNotePosition) {
+					_rightNoteId = noteId;
+					note.setRight (true);
+					_rightNote = note;
+				}
+
+				j = Random.Range (j + 1, 14);
+				foreach(Note previous_note in _notes){
+					while(j%8 == previous_note.getNoteId()%8)
+						j = Random.Range (j + 1, 13);
+				}
+			}
+			break;
+		}
     }
 
 	public int getRightNoteId(){

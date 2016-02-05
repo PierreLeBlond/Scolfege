@@ -10,6 +10,8 @@ public class Score : MonoBehaviour {
 
 	private int _score = 0;
 	private int _numberOfChord;
+	private int _noteCombo = 0;
+	private int _scoreValue = 50;
 
 	// Use this for initialization
 	void Start () {
@@ -24,15 +26,7 @@ public class Score : MonoBehaviour {
 	public void updateScore()
 	{
 		scoreText.text = _score.ToString();
-		if (_score < 0)
-		{
-			scoreText.color = Color.red;
-		}
-		else
-		{
-			scoreText.color = Color.white;
-		}
-		numberOfChordText.text = "/" + _numberOfChord.ToString();
+		numberOfChordText.text = "combo : " + _noteCombo.ToString();
 	}
 
 	public void oneMoreChord(){
@@ -47,13 +41,19 @@ public class Score : MonoBehaviour {
 		_score = score;
 	}
 
+	public void setNoteCombo(int combo){
+		_noteCombo = combo;
+	}
+
+	public void setScoreValue(int value){
+		_scoreValue = value;
+	}
+
 	public void OnTriggerEnter2D(Collider2D intruder)
 	{
-		Debug.Log ("Ook !");
 		if (intruder.CompareTag("Note"))
 		{
-			Debug.Log ("Ook ?");
-			_score++;
+			_score += _scoreValue;
 			updateScore();
 		}
 	}

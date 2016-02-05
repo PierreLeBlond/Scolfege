@@ -16,7 +16,7 @@ public class Bar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		secondLine.gameObject.SetActive(false);
-		transform.localPosition = new Vector3(8f, 0f, 0f);
+		transform.localPosition = new Vector3(8f, -1f, 0f);
 	}
 	
 	// Update is called once per frame
