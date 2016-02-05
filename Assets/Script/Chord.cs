@@ -36,7 +36,7 @@ public class Chord : MonoBehaviour {
     {
         Note note;
         int noteId = 0;
-        int j = Random.Range(0, 5); //The first note goes from lower A to middle F
+        int j = Random.Range(2, 6); //The first note goes from lower A to middle F
         int rightNotePosition = Random.Range(0, 3);
 		for (int i = 0; i < _numberOfNote; i++)
         {
@@ -67,7 +67,7 @@ public class Chord : MonoBehaviour {
 				_rightNote = note;
             }
 
-			j = Random.Range(j+1, 16);
+			j = Random.Range(j+1, 14);
         }
     }
 

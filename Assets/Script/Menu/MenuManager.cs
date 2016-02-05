@@ -27,4 +27,9 @@ public class MenuManager : MonoBehaviour {
 	{
 		Application.LoadLevel("_Profil");
 	}
+
+	public void LoadTuto()
+	{
+		Application.LoadLevel ("_Tuto");
+	}
 }

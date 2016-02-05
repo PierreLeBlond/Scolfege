@@ -8,21 +8,24 @@ public class GameManager : MonoBehaviour {
 	public Line linePrefab;
 	public Square squarePrefab;
 	public Chord chordPrefab;
+	public Life lifePrefab;
     public NoteGamePlayerController player;
 
 	public Key keyPrefab;
 
 	public Bar barPrefab;
 
-	//public Transform backGround;
-	//public Transform playGround;
-    //public Transform forGround;
-
     public Text noteText;
 
 	public bool pause = false;
 
 	public Score _score;
+
+	public int noteCombo = 0;
+
+	private Life[] _life;
+
+	private int life = 12;
 
 	private List<Line> _lines = new List<Line>();
 	private Square _square;
@@ -34,10 +37,19 @@ public class GameManager : MonoBehaviour {
 
     private int _rightNoteId;
 
+	private KeyEnum key = KeyEnum.GKey;
+
 
 
 	// Use this for initialization
 	void Start () {
+
+		_life = new Life[3];
+		for (int i = 0; i < 3; i++) {
+			Life life = Instantiate(lifePrefab) as Life;
+			life.transform.localPosition = new Vector3(5f + i, 4f, 0f);
+			_life[i] = life;
+		}
 
 		_key = Instantiate (keyPrefab) as Key;
 
@@ -63,22 +75,30 @@ public class GameManager : MonoBehaviour {
 		//_chord.transform.parent = playGround.transform;
         _chord.generateNotes();
         _rightNoteId = _chord.getRightNoteId();
-        noteText.text = Notes.getString(_rightNoteId);
+        noteText.text = Notes.getString(_rightNoteId, key);
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (life <= 0) {
+			quitGame ();
+		}
         if (player.hasANote())
         {
             int chosenNoteId = player.getChosenNoteId();
 
 			switch(_chord.checkPickedNote(chosenNoteId)){
 			case (Chord.Result.None) :
+				noteCombo = 0;
 				player.getAvatar().showAss();
+				removeLife();
 				break;
 			case (Chord.Result.Win) :
-				//_score.setScore(_score.getScore()+1);
+				noteCombo++;
+				if(noteCombo >= 2){
+					addPartLife();
+					noteCombo = 0;
+				}
 				if (_score.getScore() + 1 == 0)
 				{
 					player.getAvatar().setIsWinning(true);
@@ -86,6 +106,8 @@ public class GameManager : MonoBehaviour {
 				player.getAvatar().win();
 				break;
 			case (Chord.Result.Loose) :
+				noteCombo = 0;
+				removeLife();
 				_score.setScore(_score.getScore()-1);
 				if (_score.getScore() < 0)
 				{
@@ -128,6 +150,48 @@ public class GameManager : MonoBehaviour {
         }
 
 	}
+
+	public void changeKey(){
+		if (key == KeyEnum.FKey)
+		{
+			key = KeyEnum.GKey;
+			_key.setGKey();
+		}
+		else
+		{
+			key = KeyEnum.FKey;
+			_key.setFKey();
+		}
+		noteText.text = Notes.getString(_rightNoteId, key);
+	}
+
+	public void addPartLife(){
+		if (life < 12) {
+			life++;
+			setLife ();
+		}
+	}
+
+	public void removeLife(){
+		life -= 4;
+		setLife ();
+	}
+
+	public void setLife(){
+		for (int i = 0; i < 3; i++) {
+			if(life >= (i+1)*4){
+				_life[i].setPartId(4);
+				_life[i].setParts();
+			}else if( life > i*4 && life < (i+1)*4){
+				_life[i].setPartId(life%4);
+				_life[i].setParts();
+			}else{
+				_life[i].setPartId(0);
+				_life[i].setParts();
+			}
+		}
+	}
+
 
 	public void quitGame()
 	{

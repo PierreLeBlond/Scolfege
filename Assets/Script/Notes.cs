@@ -11,6 +11,11 @@ public enum NotesName {
     SOL
 }
 
+public enum KeyEnum {
+	GKey,
+	FKey
+}
+
 public static class Notes
 {
 
@@ -19,10 +24,10 @@ public static class Notes
         return (NotesName) noteId;
 	}
 
-    public static string getString(int NoteId)
+    public static string getString(int NoteId, KeyEnum Key)
     {
 		string name;
-        switch ((NotesName) (NoteId % 7))
+        switch ((NotesName) ((NoteId + (int)Key*2) % 7))
         {
             case NotesName.DO:
 			name = "Do";

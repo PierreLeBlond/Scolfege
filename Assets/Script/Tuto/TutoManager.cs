@@ -14,12 +14,12 @@ public class TutoManager : MonoBehaviour {
     private List<Door> _doors = new List<Door>();
     private List<Lamp> _lamps = new List<Lamp>();
 
-    private Door _tutoDoor;
+    //private Door _tutoDoor;
 
     // Use this for initialization
     void Start()
     {
-        Line upLine = Instantiate(linePrefab) as Line;
+        /*Line upLine = Instantiate(linePrefab) as Line;
         upLine.transform.localPosition = new Vector3(-5.0f, 2.0f, 0.0f);
         upLine.GetComponent<BoxCollider2D>().isTrigger = false;
         _lines.Add(upLine);
@@ -58,7 +58,7 @@ public class TutoManager : MonoBehaviour {
 
         _tutoDoor = Instantiate(doorPrefab) as Door;
         _tutoDoor.transform.localPosition = new Vector3(0.0f, -4.0f, 0.0f);
-        _doors.Add(_tutoDoor);
+        _doors.Add(_tutoDoor);*/
     }
 
     // Update is called once per frame
@@ -72,7 +72,7 @@ public class TutoManager : MonoBehaviour {
 
     public void doorIsChosen()
     {
-        Application.LoadLevel("_MainMenu");
+        Application.LoadLevel("_TutoNote");
     }
 
     public void quitGame()

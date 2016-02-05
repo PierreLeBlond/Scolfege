@@ -49,6 +49,7 @@
      <Compile Include="Assets\Script\Bar.cs" />
      <Compile Include="Assets\Script\Chord.cs" />
      <Compile Include="Assets\Script\Key.cs" />
+     <Compile Include="Assets\Script\Life.cs" />
      <Compile Include="Assets\Script\Line.cs" />
      <Compile Include="Assets\Script\Menu\MenuManager.cs" />
      <Compile Include="Assets\Script\Note.cs" />
@@ -67,6 +68,8 @@
      <Compile Include="Assets\Script\SoundGame\SoundGamePlayerController.cs" />
      <Compile Include="Assets\Script\Square.cs" />
      <Compile Include="Assets\Script\Tuto\TutoManager.cs" />
+     <Compile Include="Assets\Script\Tuto\TutoNoteGameManager.cs" />
+     <Compile Include="Assets\Script\Tuto\TutoNotePlayerController.cs" />
      <Compile Include="Assets\Script\Tuto\TutoPlayerController.cs" />
      <Compile Include="Assets\Script\UserManager.cs" />
  <Reference Include="UnityEngine.UI">
