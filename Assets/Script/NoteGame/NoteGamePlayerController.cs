@@ -3,18 +3,20 @@ using System.Collections;
 
 public class NoteGamePlayerController : MonoBehaviour {
 
+	//Public
     public PlayerAvatar playerAvatarPrefab;
 	public Piano pianoPrefab;
 
+	//Private
     private PlayerAvatar _playerAvatar;
 
 	private Piano _piano;
 
-    private int _currentNoteId = 6;//La note ou se trouve le joueur
+    private int _currentNoteId = 6;//L'id de la note ou se trouve le joueur
     private int _chosenNoteId;//La dernière note choisit par le joueur
 
-    private bool _hasANote = false;//Si le joueur à choisit une note
-    private bool _hasTheRightNote = false;
+    private bool _hasChoosenANote = false;//Si le joueur à choisit une note
+    private bool _hasTheRightNote = false;//Si le joueur à choisit la bonne note
 
 	private float _autoFire;
     
@@ -58,21 +60,21 @@ public class NoteGamePlayerController : MonoBehaviour {
         return _chosenNoteId;
     }
 
-    public bool hasANote()
+    public bool hasChoosenANote()
     {
-        return _hasANote;
+        return _hasChoosenANote;
     }
 
-    public void setHasANote(bool hasANote)
+    public void setHasChoosenNote(bool hasChoosenANote)
     {
-        _hasANote = hasANote;
+        _hasChoosenANote = hasChoosenANote;
     }
 
     public void OnTriggerEnter2D(Collider2D intruder)
     {
-        if (!_hasANote && intruder.CompareTag("Chord"))
+        if (!_hasChoosenANote && intruder.CompareTag("Chord"))
         {
-            _hasANote = true;
+            _hasChoosenANote = true;
             _chosenNoteId = _currentNoteId;
         }
     }

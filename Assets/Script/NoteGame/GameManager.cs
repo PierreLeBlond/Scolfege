@@ -5,60 +5,53 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+	//Prefab
 	public Line linePrefab;
 	public Square squarePrefab;
 	public Chord chordPrefab;
 	public Life lifePrefab;
-    public NoteGamePlayerController player;
-
 	public Key keyPrefab;
-
 	public Bar barPrefab;
 
+	//Public
+	public NoteGamePlayerController player;
+
     public Text noteText;
-
 	public bool pause = false;
+	public Score score;
 
-	public Score _score;
-
-	private int lifeCombo = 0;
-
-	private int noteCombo = 0;
-
-	private int scoreValue = 50;
-
-	private Life[] _life;
-
-	private int life = 12;
-
-	private int level;
+	//Private
+	private int _lifeCombo = 0;
+	private int _noteCombo = 0;
+	private int _scoreValue = 50;
+	private Life[] _lifes;
+	private int _lifeId = 12;
+	private int _level;
 
 	private List<Line> _lines = new List<Line>();
 	private Square _square;
 	private Chord _chord;
-	private Key _key;
+	private Key _keyUI;
 	private Bar _bar;
 
-    private int _numberOfChord = 0;
-
+	private int _numberOfChord = 0;
     private int _rightNoteId;
-
-	private KeyEnum key = KeyEnum.GKey;
+	private KeyEnum _key = KeyEnum.GKey;
 
 
 
 	// Use this for initialization
 	void Start () {
 
-		_life = new Life[3];
+		_lifes = new Life[3];
 		for (int i = 0; i < 3; i++) {
 			Life life = Instantiate(lifePrefab) as Life;
 			life.transform.localPosition = new Vector3(5f + i, 4f, 0f);
-			_life[i] = life;
+			_lifes[i] = life;
 		}
 
-		_key = Instantiate (keyPrefab) as Key;
-		_key.transform.localPosition = new Vector3 (-6f, -3.3f, 0f);
+		_keyUI = Instantiate (keyPrefab) as Key;
+		_keyUI.transform.localPosition = new Vector3 (-6f, -3.3f, 0f);
 
 		Line line;
 		for (int i = 0; i < 5; i++) {
@@ -76,11 +69,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void generateChord () {
-        _score.oneMoreChord();
+        score.oneMoreChord();
         _chord = Instantiate (chordPrefab) as Chord;
 		_bar = Instantiate (barPrefab) as Bar;
 		//_chord.transform.parent = playGround.transform;
-		switch (level) {
+		switch (_level) {
 		case 0:
 			_chord.generateNotes(0);
 			_chord.speed = new Vector2(2f, 0f);
@@ -108,59 +101,60 @@ public class GameManager : MonoBehaviour {
 			break;
 		default:
 			_chord.generateNotes(2);
-			_chord.speed = new Vector2(5f + 0.2f*(6f-(float)level), 0f);
+			_chord.speed = new Vector2(5f + 0.2f*(6f-(float)_level), 0f);
 			_bar.speed = new Vector2(2f, 0f);
 			break;
 		}
   
         _rightNoteId = _chord.getRightNoteId();
-        noteText.text = Notes.getString(_rightNoteId, key);
+        noteText.text = Notes.getString(_rightNoteId, _key);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (life <= 0) {
+		if (_lifeId <= 0) {
+			//TODO GameOver
 			quitGame ();
 		}
-        if (player.hasANote())
+        if (player.hasChoosenANote())
         {
             int chosenNoteId = player.getChosenNoteId();
 
 			switch(_chord.checkPickedNote(chosenNoteId)){
 			case (Chord.Result.None) :
-				lifeCombo = 0;
-				noteCombo = 0;
-				scoreValue = 50;
+				_lifeCombo = 0;
+				_noteCombo = 0;
+				_scoreValue = 50;
 				player.getAvatar().showAss();
 				removeLife();
 				break;
 			case (Chord.Result.Win) :
-				lifeCombo++;
-				if(lifeCombo >= 5){
+				_lifeCombo++;
+				if(_lifeCombo >= 5){
 					addPartLife();
-					lifeCombo = 0;
+					_lifeCombo = 0;
 				}
-				noteCombo++;
-				switch(noteCombo){
+				_noteCombo++;
+				switch(_noteCombo){
 				case 5 :
-					scoreValue = 100;
+					_scoreValue = 100;
 					break;
 				case 10 :
-					level++;
-					scoreValue = 150;
+					_level++;
+					_scoreValue = 150;
 					break;
 				case 15:
-					scoreValue = 200;
+					_scoreValue = 200;
 					break;
 				case 20:
-					scoreValue = 250;
+					_scoreValue = 250;
 					break;
 				case 30:
-					scoreValue = 300;
+					_scoreValue = 300;
 					break;
 				default:
-					if(noteCombo / 10 >= 4 && noteCombo % 10 == 0){
-						scoreValue+=50;
+					if(_noteCombo / 10 >= 4 && _noteCombo % 10 == 0){
+						_scoreValue+=50;
 					}
 					break;
 				}
@@ -171,9 +165,9 @@ public class GameManager : MonoBehaviour {
 				player.getAvatar().win();
 				break;
 			case (Chord.Result.Loose) :
-				lifeCombo = 0;
-				noteCombo = 0;
-				scoreValue = 50;
+				_lifeCombo = 0;
+				_noteCombo = 0;
+				_scoreValue = 50;
 				removeLife();
 				/*if (_score.getScore() < 0)
 				{
@@ -185,10 +179,10 @@ public class GameManager : MonoBehaviour {
 			default:
 				break;
 			}
-            player.setHasANote(false);
+            player.setHasChoosenNote(false);
 
-			_score.setScoreValue(scoreValue);
-			_score.setNoteCombo(noteCombo);
+			score.setScoreValue(_scoreValue);
+			score.setNoteCombo(_noteCombo);
 		}
 
 		if (Input.GetKeyDown (KeyCode.R) || _chord.transform.position.x < -10f) {
@@ -197,7 +191,7 @@ public class GameManager : MonoBehaviour {
 			generateChord();    
 		}
 
-        _score.updateScore();
+        score.updateScore();
 
 
 		if(Input.GetKey(KeyCode.Escape)){
@@ -221,42 +215,42 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void changeKey(){
-		if (key == KeyEnum.FKey)
+		if (_key == KeyEnum.FKey)
 		{
-			key = KeyEnum.GKey;
-			_key.setGKey();
+			_key = KeyEnum.GKey;
+			_keyUI.setGKey();
 		}
 		else
 		{
-			key = KeyEnum.FKey;
-			_key.setFKey();
+			_key = KeyEnum.FKey;
+			_keyUI.setFKey();
 		}
-		noteText.text = Notes.getString(_rightNoteId, key);
+		noteText.text = Notes.getString(_rightNoteId, _key);
 	}
 
 	public void addPartLife(){
-		if (life < 12) {
-			life++;
+		if (_lifeId < 12) {
+			_lifeId++;
 			setLife ();
 		}
 	}
 
 	public void removeLife(){
-		life -= 4;
+		_lifeId -= 4;
 		setLife ();
 	}
 
 	public void setLife(){
 		for (int i = 0; i < 3; i++) {
-			if(life >= (i+1)*4){
-				_life[i].setPartId(4);
-				_life[i].setParts();
-			}else if( life > i*4 && life < (i+1)*4){
-				_life[i].setPartId(life%4);
-				_life[i].setParts();
+			if(_lifeId >= (i+1)*4){
+				_lifes[i].setPartId(4);
+				_lifes[i].setParts();
+			}else if( _lifeId > i*4 && _lifeId < (i+1)*4){
+				_lifes[i].setPartId(_lifeId%4);
+				_lifes[i].setParts();
 			}else{
-				_life[i].setPartId(0);
-				_life[i].setParts();
+				_lifes[i].setPartId(0);
+				_lifes[i].setParts();
 			}
 		}
 	}
@@ -264,7 +258,7 @@ public class GameManager : MonoBehaviour {
 
 	public void quitGame()
 	{
-		UserManager.Instance.addNoteGameScore(_score.getScore());
+		UserManager.Instance.addNoteGameScore(score.getScore());
 		Application.LoadLevel("_MainMenu");
 	}
 }
