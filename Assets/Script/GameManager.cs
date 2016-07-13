@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour {
 
 		//_gameplay.pianoBonus = true;
 
+		//tuto.mobile = true;
 		generateLevels();
 		info.setGameplay(_gameplay);
 		StartCoroutine(startGame());
@@ -128,7 +129,6 @@ public class GameManager : MonoBehaviour {
 			if (_chord && _chord.isDestroyed) {
 				Destroy (_chord.gameObject);
 				_generate = true;
-
 			}
 
 			if(_generate)
@@ -151,7 +151,9 @@ public class GameManager : MonoBehaviour {
 		playerUI.hide();
 		tuto.hideCommand();
 		player.playerAvatar.gameObject.SetActive(false);
+		Debug.Log("ping");
 		yield return new WaitForSeconds(1);
+		Debug.Log("pong");
 		vortex.scaleMax = 1.0f;
 		vortex.show();
 		yield return new WaitForSeconds(1);

@@ -6,6 +6,7 @@ using System;
 //TODO Animation for text and hide/show
 
 public class Tuto : MonoBehaviour {
+	public bool mobile = false;
 
 	public Text text;
 	public SpriteRenderer background;
@@ -14,6 +15,7 @@ public class Tuto : MonoBehaviour {
 	public Text continueButtonText;
 
 	public KeyboardArrow keyboardArrow;
+	public GameObject 	 pointer;
 
 	public String[] messages;
 
@@ -31,29 +33,32 @@ public class Tuto : MonoBehaviour {
 	}
 
 	public void generateMessage(){
+
+		continueButtonText.text = mobile?"Touchez ici pour continuer.":"appuyez sur espace pour continuer.";
+
 		messages = new String[17];
-		messages[0] = "Vous voila à l'intérieur d'une partition ! Appuyez sur espace pour continuer.";
+		messages[0] = mobile?"Vous voila à l'intérieur d'une partition !":"Vous voila à l'intérieur d'une partition ! Appuyez sur espace pour continuer.";
 		messages[1] = "Déplacez vous vers le haut pour atteindre la partie supérieur de la portée.";
 		messages[2] = "Déplacez vous maintenant vers le bas pour atteindre la partie inférieur.";
-		messages[3] = "Appuyez sur la fleche directionnelle droite pour jouer la note, et lancer un projectile.";
-		messages[4] = "Le nom des notes s'affichent en haut de l'écran, prenez le temps de les apprendre avant d'appuyer sur espace.";
+		messages[3] = mobile?"Touchez la portée pour jouer la note, et lancer un projectile.":"Appuyez sur la fleche directionnelle droite pour jouer la note, et lancer un projectile.";
+		messages[4] = "Le nom des notes s'affichent en haut de l'écran, prenez le temps de les apprendre avant de continuer.";
 		messages[5] = "Le nom affiché en haut de l'écran correspond à l'une de ces notes, à vous de trouver la bonne.";
-		messages[6] = "Lancez un projectile ou attendez de toucher la note que vous souhaitez choisir.";
-		messages[7] = "Si celle ci correspond au nom en bas de l'écran, vous gagnerez des points !";
+		messages[6] = "Lancez un projectile ou attendez de rencontrer la note que vous souhaitez choisir.";
+		messages[7] = "Si celle ci correspond au nom en haut de l'écran, vous gagnerez des points !";
 		messages[8] = "Mais si vous vous trompez, ou si vous ne choisissez pas assez vite, vous perdrez de la vie...";
 		messages[9] = "Prêt ?";
 		messages[10] = "Parfois, des bonus peuvent apparaître : ils rapportent des points ou des multiplicateurs de score !";
 		messages[11] = "Mais ils rendent aussi le jeu plus difficile ! Ce bonus change la clé de sol en clé de fa.";
 		messages[12] = "Vous feriez bien de vous mettre à l'abri à la note indiqué !";
 		messages[13] = "Ce bonus ne permet plus de voir les choix de notes, il faut trouver du premier coup !";
-		messages[14] = "Ce bonus ne permet plus de voir le nom de la note, appuyez sur espace pour jouer le son à la place !";
+		messages[14] = mobile?"Ce bonus ne permet plus de voir le nom de la note, touchez l'icone en haut pour jouer le son à la place !":"Ce bonus ne permet plus de voir le nom de la note, touchez l'icone en haut pour jouer le son à la place !";
 		messages[15] = "Vous vous deplacez maintenant à l'aide d'un clavier de piano !";
-		messages[16] = "Appuyez sur les touches du clavier pour vous deplacer sur la partition, et sur la portée pour jouer une note.";
+		messages[16] = mobile?"Touchez le clavier pour vous deplacer sur la partition":"Appuyez sur les touches du clavier pour vous deplacer sur la partition, et sur la portée pour jouer une note.";
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space)){
+		if(!mobile && Input.GetKeyDown(KeyCode.Space)){
 			continueGame();
 		}
 	}
@@ -79,13 +84,30 @@ public class Tuto : MonoBehaviour {
 	}
 
 	public void showCommand(Direction direction){
-		keyboardArrow.gameObject.SetActive(true);
-		keyboardArrow.reset();
-		keyboardArrow.highlight((int)direction);
+		if(mobile){
+			pointer.SetActive(true);
+			switch(direction){
+			case Direction.UP:
+				pointer.transform.localPosition = new Vector3(-5.53f, 3.61f, 0f);
+				break;
+			case Direction.DOWN:
+				pointer.transform.localPosition = new Vector3(5.38f, -3.66f, 0f);
+				break;
+			case Direction.RIGHT:
+				pointer.transform.localPosition = new Vector3(0f, 0f, 0f);
+				break;
+			}
+		}
+		else{
+			keyboardArrow.gameObject.SetActive(true);
+			keyboardArrow.reset();
+			keyboardArrow.highlight((int)direction);
+		}
 	}
 
 	public void hideCommand(){
-		keyboardArrow.gameObject.SetActive(false);
+			pointer.SetActive(false);
+			keyboardArrow.gameObject.SetActive(false);
 	}
 
 	public void hide(){

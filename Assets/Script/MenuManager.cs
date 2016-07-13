@@ -57,14 +57,11 @@ public class MenuManager : MonoBehaviour {
 	public IEnumerator launchGame(){
 		while(audio.volume > 0){
 			audio.volume -= 0.002f;
-			Debug.Log("coucou");
 			yield return null;
 		 }
-		yield return new WaitForSeconds(6);
-		Debug.Log("hello");
+		while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Vortexing")) yield return null;
 		vortex.scaleMax = 3.0f;
 		vortex.show();
-		while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Vortexing")) yield return null;
 		yield return new WaitForSeconds(6);
 		fondu.enabled = true;
 		yield return new WaitForSeconds(1);

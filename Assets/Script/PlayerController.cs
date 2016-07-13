@@ -46,22 +46,36 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(movable){
-			if (Input.GetKey(KeyCode.UpArrow) && _currentPositionId < 14 && Time.time - _autoFire > _autoFireSpeed)
+			if (Input.GetKey(KeyCode.UpArrow))
 			{
-				_transform.localPosition = new Vector2(_transform.localPosition.x, _transform.localPosition.y + 0.5f);
-				if(_ghostNote)
-					_ghostNote.transform.localPosition = new Vector2(_ghostNote.transform.localPosition.x, _transform.localPosition.y + 1f);
-				_currentPositionId++;
-				_autoFire = Time.time;
+				goUp();
 			}
-			else if (Input.GetKey(KeyCode.DownArrow) && _currentPositionId > 2 && Time.time - _autoFire > _autoFireSpeed)
+			else if (Input.GetKey(KeyCode.DownArrow))
 			{
-				_transform.localPosition = new Vector2(_transform.localPosition.x, _transform.localPosition.y - 0.5f);
-				if(_ghostNote)
-					_ghostNote.transform.localPosition = new Vector2(_ghostNote.transform.localPosition.x, _transform.localPosition.y + 1f);
-				_currentPositionId--;
-				_autoFire = Time.time;
+				goDown();
 			}
+		}
+	}
+
+	public void goUp(){
+		if(_currentPositionId < 14 && Time.time - _autoFire > _autoFireSpeed)
+		{
+			_transform.localPosition = new Vector2(_transform.localPosition.x, _transform.localPosition.y + 0.5f);
+			if(_ghostNote)
+			_ghostNote.transform.localPosition = new Vector2(_ghostNote.transform.localPosition.x, _transform.localPosition.y + 1f);
+			_currentPositionId++;
+			_autoFire = Time.time;
+		}
+	}
+
+	public void goDown(){
+		if(_currentPositionId > 2 && Time.time - _autoFire > _autoFireSpeed)
+		{
+			_transform.localPosition = new Vector2(_transform.localPosition.x, _transform.localPosition.y - 0.5f);
+			if(_ghostNote)
+			_ghostNote.transform.localPosition = new Vector2(_ghostNote.transform.localPosition.x, _transform.localPosition.y + 1f);
+			_currentPositionId--;
+			_autoFire = Time.time;
 		}
 	}
 }
