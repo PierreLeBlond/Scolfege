@@ -55,7 +55,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -70,10 +70,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: vortexing
-      takeName: vortexing
+      name: Awakening0
+      takeName: Awakening
       firstFrame: 0
-      lastFrame: 198
+      lastFrame: 379
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -92,7 +92,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.1703511
+        functionName: yawn
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 42aaadfeca3feb741bd834cd5df86eb2,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -257,6 +265,76 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Awakening
+      takeName: Awakening
+      firstFrame: 0
+      lastFrame: 379
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.16905071
+        functionName: Yawn
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 42aaadfeca3feb741bd834cd5df86eb2,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Awakening2.0
       takeName: Awakening
       firstFrame: 0
       lastFrame: 379

@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour {
 
 	public GameObject title;
 
-	public AudioSource audio;
+	public AudioSource orchestraSound;
 
 	public GameObject avatar;
 
@@ -49,14 +49,18 @@ public class MenuManager : MonoBehaviour {
 	}
 
 	public void play() {
-		button.gameObject.SetActive(false);
+		//button.gameObject.SetActive(false);
 		animator.SetTrigger("Awake");
 		StartCoroutine(launchGame());
 	}
 
+        public void yawn(){
+            Debug.Log("Yawn");
+        }
+
 	public IEnumerator launchGame(){
-		while(audio.volume > 0){
-			audio.volume -= 0.002f;
+		while(orchestraSound.volume > 0){
+			orchestraSound.volume -= 0.002f;
 			yield return null;
 		 }
 		while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Vortexing")) yield return null;

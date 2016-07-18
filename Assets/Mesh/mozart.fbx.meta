@@ -1,0 +1,114 @@
+fileFormatVersion: 2
+guid: 3929aff097980470c89f38d9f16ceb4f
+timeCreated: 1468749138
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Ass
+    100002: Body
+    100004: Head
+    100006: LeftForeArm
+    100008: LeftForeLeg
+    100010: LeftRearArm
+    100012: LeftRearLeg
+    100014: LeftShoulder
+    100016: Mozart
+    100018: //RootNode
+    100020: MozartArmature
+    100022: RightForeArm
+    100024: RightForeLeg
+    100026: RightRearArm
+    100028: RightRearLeg
+    100030: RightShoulder
+    100032: Stick
+    400000: Ass
+    400002: Body
+    400004: Head
+    400006: LeftForeArm
+    400008: LeftForeLeg
+    400010: LeftRearArm
+    400012: LeftRearLeg
+    400014: LeftShoulder
+    400016: Mozart
+    400018: //RootNode
+    400020: MozartArmature
+    400022: RightForeArm
+    400024: RightForeLeg
+    400026: RightRearArm
+    400028: RightRearLeg
+    400030: RightShoulder
+    400032: Stick
+    4300000: Mozart
+    7400000: Default Take
+    7400002: Awakening_2_0
+    7400004: Awakening
+    7400006: PoseLib
+    7400008: Sleeping
+    7400010: vortexing
+    9500000: //RootNode
+    13700000: Mozart
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

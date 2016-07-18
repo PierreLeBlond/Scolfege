@@ -15,7 +15,10 @@ public class Tuto : MonoBehaviour {
 	public Text continueButtonText;
 
 	public KeyboardArrow keyboardArrow;
+
 	public GameObject 	 pointer;
+        public GameObject hand;
+        public GameObject arrow;
 
 	public String[] messages;
 
@@ -85,17 +88,27 @@ public class Tuto : MonoBehaviour {
 
 	public void showCommand(Direction direction){
 		if(mobile){
-			pointer.SetActive(true);
 			switch(direction){
 			case Direction.UP:
-				pointer.transform.localPosition = new Vector3(-5.53f, 3.61f, 0f);
-				break;
-			case Direction.DOWN:
-				pointer.transform.localPosition = new Vector3(5.38f, -3.66f, 0f);
-				break;
-			case Direction.RIGHT:
-				pointer.transform.localPosition = new Vector3(0f, 0f, 0f);
-				break;
+                          pointer.SetActive(true);
+                          hand.SetActive(true);
+                          arrow.SetActive(true);
+                          pointer.transform.localPosition = new Vector3(-5.53f, 3.61f, 0f);
+                          arrow.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); 
+                          break;
+                        case Direction.DOWN:
+                          pointer.SetActive(true);
+                          hand.SetActive(true);
+                          arrow.SetActive(true);
+                          pointer.transform.localPosition = new Vector3(5.38f, -3.66f, 0f);
+                          arrow.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 180.0f); 
+                          break;
+                        case Direction.RIGHT:
+                          pointer.SetActive(true);
+                          hand.SetActive(true);
+                          arrow.SetActive(false);
+                          pointer.transform.localPosition = new Vector3(0f, 0f, 0f);
+                          break;
 			}
 		}
 		else{
