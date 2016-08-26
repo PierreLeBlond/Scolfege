@@ -4,7 +4,26 @@ timeCreated: 1468499584
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: Escabaux
+    100002: Estale
+    100004: Pupitre
+    100006: //RootNode
+    400000: Escabaux
+    400002: Estale
+    400004: Pupitre
+    400006: //RootNode
+    2300000: Escabaux
+    2300002: Estale
+    2300004: Pupitre
+    3300000: Escabaux
+    3300002: Estale
+    3300004: Pupitre
+    4300000: Estale
+    4300002: Pupitre
+    4300004: Escabaux
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -12,7 +31,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 

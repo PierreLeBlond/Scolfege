@@ -3,7 +3,10 @@ using System.Collections;
 
 public class Note : MonoBehaviour
 {
-    public GameObject noteSprite;
+    public SpriteRenderer noteIn;
+    public SpriteRenderer noteOut;
+
+    public SpriteRenderer sprite;
 
     public Light noteLight;
 
@@ -13,8 +16,11 @@ public class Note : MonoBehaviour
     private Color _color = Color.white;
 
 	// Use this for initialization
-	void Start () {
-		noteSprite.GetComponent<SpriteRenderer> ().sortingOrder = 5;
+	void Awake () {
+        sprite = noteIn;
+        noteOut.enabled = false;
+        GetComponent<FadableToDeath>().sprite = sprite;
+		sprite.sortingOrder = 5;
 	}
 
 	public void setRight(bool b){
@@ -26,6 +32,24 @@ public class Note : MonoBehaviour
         _noteId = noteId;
     }
 
+    public void setNoteIn()
+    {
+        if(sprite)
+            sprite.enabled = false;
+        sprite = noteIn;
+        GetComponent<FadableToDeath>().sprite = sprite;
+        sprite.enabled = true;
+    }
+
+    public void setNoteOut()
+    {
+        if(sprite)
+            sprite.enabled = false;
+        sprite = noteOut;
+        GetComponent<FadableToDeath>().sprite = sprite;
+        sprite.enabled = true;
+    }
+
     public int getNoteId()
     {
         return _noteId;
@@ -33,7 +57,7 @@ public class Note : MonoBehaviour
 
     public void paint(Color color)
     {
-        noteSprite.GetComponent<SpriteRenderer>().color = color;
+        sprite.color = color;
         _color = color;
     }
 

@@ -3,7 +3,7 @@ guid: 4a7c80ca9c78f9d46b25ea422caf92cd
 timeCreated: 1466873574
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 18
   fileIDToRecycleName:
     100000: Ass
     100002: Body
@@ -46,6 +46,17 @@ ModelImporter:
     7400006: vortexing
     7400008: Awakening
     7400010: Sleeping
+    7400012: Awakening0
+    7400014: Awakening2.0
+    7400016: Awakening_2_0
+    7400018: Default
+    7400020: LookingAround
+    7400022: LookingAround_001
+    7400024: Loosing
+    7400026: MozartArmatureAction
+    7400028: Playing
+    7400030: Shooting
+    7400032: Winning
     9500000: //RootNode
     13700000: Mozart
   materials:
@@ -55,7 +66,6 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -63,23 +73,22 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: 0.5
-    animationPositionError: 0.5
-    animationScaleError: 0.5
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Awakening0
-      takeName: Awakening
+      name: Default Take
+      takeName: Default Take
       firstFrame: 0
-      lastFrame: 379
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -93,11 +102,31 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.1703511
-        functionName: yawn
+      - time: .0953206196
+        functionName: blink
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 42aaadfeca3feb741bd834cd5df86eb2,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .171577126
+        functionName: mute
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .339688033
+        functionName: blink
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .603119612
+        functionName: mute
+        data: 
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -138,18 +167,16 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: PoseLib
-      takeName: PoseLib
+      name: Awakening_2_0
+      takeName: Awakening_2_0
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 299
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -162,7 +189,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .214904681
+        functionName: closeEye
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .850953221
+        functionName: mute
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -200,18 +241,90 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Sleeping
-      takeName: Sleeping
+      name: Awakening
+      takeName: Awakening
       firstFrame: 0
-      lastFrame: 139
+      lastFrame: 379
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .355285943
+        functionName: blink
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .89774698
+        functionName: mute
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Default
+      takeName: Default
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
@@ -262,88 +375,16 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Awakening
-      takeName: Awakening
+      name: LookingAround
+      takeName: LookingAround
       firstFrame: 0
-      lastFrame: 379
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.16905071
-        functionName: Yawn
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 42aaadfeca3feb741bd834cd5df86eb2,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask:
-      - path: 
-        weight: 1
-      - path: Mozart
-        weight: 1
-      - path: MozartArmature
-        weight: 1
-      - path: MozartArmature/Ass
-        weight: 1
-      - path: MozartArmature/Ass/LeftRearLeg
-        weight: 1
-      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
-        weight: 1
-      - path: MozartArmature/Ass/RightRearLeg
-        weight: 1
-      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
-        weight: 1
-      - path: MozartArmature/Body
-        weight: 1
-      - path: MozartArmature/Body/Head
-        weight: 1
-      - path: MozartArmature/Body/LeftShoulder
-        weight: 1
-      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
-        weight: 1
-      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
-        weight: 1
-      - path: MozartArmature/Body/RightShoulder
-        weight: 1
-      - path: MozartArmature/Body/RightShoulder/RightRearArm
-        weight: 1
-      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
-        weight: 1
-      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Awakening2.0
-      takeName: Awakening
-      firstFrame: 0
-      lastFrame: 379
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -394,7 +435,546 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LookingAround_001
+      takeName: LookingAround_001
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Loosing
+      takeName: Loosing
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: MozartArmatureAction
+      takeName: MozartArmatureAction
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Playing
+      takeName: Playing
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: PoseLib
+      takeName: PoseLib
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Shooting
+      takeName: Shooting
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sleeping
+      takeName: Sleeping
+      firstFrame: 0
+      lastFrame: 139
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: vortexing
+      takeName: vortexing
+      firstFrame: 0
+      lastFrame: 198
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Winning
+      takeName: Winning
+      firstFrame: 0
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mozart
+        weight: 1
+      - path: MozartArmature
+        weight: 1
+      - path: MozartArmature/Ass
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/LeftRearLeg/LeftForeLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg
+        weight: 1
+      - path: MozartArmature/Ass/RightRearLeg/RightForeLeg
+        weight: 1
+      - path: MozartArmature/Body
+        weight: 1
+      - path: MozartArmature/Body/Head
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm
+        weight: 1
+      - path: MozartArmature/Body/LeftShoulder/LeftRearArm/LeftForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm
+        weight: 1
+      - path: MozartArmature/Body/RightShoulder/RightRearArm/RightForeArm/Stick
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -415,19 +995,20 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
-    tangentImportMode: 4
+    splitTangentsAcrossUV: 1
+    normalImportMode: 1
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
     skeleton: []
-    armTwist: 0.5
-    foreArmTwist: 0.5
-    upperLegTwist: 0.5
-    legTwist: 0.5
-    armStretch: 0.05
-    legStretch: 0.05
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0

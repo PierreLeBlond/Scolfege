@@ -8,6 +8,8 @@ public class Scrollable : MonoBehaviour {
 
 	private Vector2 _movement;
 
+	private bool _pause = false;
+
 	// Use this for initialization
 	void Start () {
 
@@ -21,6 +23,18 @@ public class Scrollable : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		if(!_pause)
             GetComponent<Rigidbody2D>().velocity = _movement;
+		else
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+	}
+
+	public void pause(){
+		_pause = true;
+	}
+
+	public void play(){
+		_pause = false;
 	}
 }

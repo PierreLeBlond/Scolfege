@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour {
         	playerAvatar.transform.parent = transform;
 		if (playerController)
 			playerController.Transform = transform;
-
+		_level = 0;
 	}
 
 	// Update is called once per frame
@@ -86,13 +86,20 @@ public class PlayerManager : MonoBehaviour {
 
 	public void shoot(){
 		if (_loaded){
-			_projectile = Instantiate (projectilePrefab) as Projectile;
-			_projectile.id = playerController.CurrentPositionId;
-			_projectile.player = this;
-			_projectile.transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
-			piano.playNote(playerController.CurrentPositionId, _gameplay.key);
-			_loaded = false;
+			StartCoroutine(shootCoroutine());
 		}
+	}
+
+	public IEnumerator shootCoroutine()
+	{
+		playerAvatar.shoot();
+		_loaded = false;
+		yield return new WaitForSeconds(0.2f);
+		_projectile = Instantiate (projectilePrefab) as Projectile;
+		_projectile.id = playerController.CurrentPositionId;
+		_projectile.player = this;
+		_projectile.transform.localPosition = new Vector2(transform.localPosition.x + 0.2f, transform.localPosition.y);
+		piano.playNote(playerController.CurrentPositionId, _gameplay.key);
 	}
 
 	//Reset projectile
@@ -177,26 +184,35 @@ public class PlayerManager : MonoBehaviour {
 
 		if(intruder.CompareTag("Bonus"))
 		{
-			Bonus bonus = intruder.GetComponent<Bonus>();
-			int type = bonus.getBonusType();
-			FadableToDeath fadableToDeath = bonus.GetComponent<FadableToDeath>();
-			fadableToDeath.startFadingToDeath();
-			if(type == 0 || type == 1){
-				gameManager.changeKey();
-			}
-			else if(type == 2){
-				gameManager.enterBlindMode();
-			}
-			else if(type == 3){
-				gameManager.enterSoundMode();
-			}
-			else if(type == 4){
-				gameManager.enterPianoMode();
-			}
-			bonus.GetComponent<Scrollable>().speed = new Vector2(0.5f, 0.5f);
-			bonus.GetComponent<Scrollable>().direction = new Vector2(scoreTarget.x - bonus.transform.localPosition.x, scoreTarget.y - bonus.transform.localPosition.y);
+			bonusIntruder(intruder);
 		}
     }
+
+	public void bonusIntruder(Collider2D intruder)
+	{
+		Bonus bonus = intruder.GetComponent<Bonus>();
+		int type = bonus.getBonusType();
+		//FadableToDeath fadableToDeath = bonus.GetComponent<FadableToDeath>();
+		//fadableToDeath.startFadingToDeath();
+		if(type == 0 || type == 1){
+			gameManager.changeKey();
+		}
+		else if(type == 2){
+			gameManager.enterBlindMode();
+		}
+		else if(type == 3){
+			gameManager.enterSoundMode();
+		}
+		else if(type == 4){
+			StartCoroutine(gameManager.enterPianoMode());
+		}
+		else if(type == 5){
+			gameManager.enterDefaultMode();
+		}
+		bonus.GetComponent<Scrollable>().speed = new Vector2(0.5f, 0.5f);
+		bonus.GetComponent<Scrollable>().direction = new Vector2(scoreTarget.x - bonus.transform.localPosition.x, scoreTarget.y - bonus.transform.localPosition.y);
+		bonus.take();
+	}
 
 	//return if player hasn't dodge
 	public bool chordIntruder(Collider2D intruder, int noteId)

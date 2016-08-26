@@ -22,6 +22,13 @@ public class MenuManager : MonoBehaviour {
 	public Light light;
 	public Light ambiantLight;
 
+	public GameObject canvas;
+
+	public GameObject creditCanvas;
+	public Button creditButton;
+	public Text creditText;
+	public Image creditImage;
+
 	private float _scaleFactor = 0f;
 
 	// Use this for initialization
@@ -50,13 +57,44 @@ public class MenuManager : MonoBehaviour {
 
 	public void play() {
 		//button.gameObject.SetActive(false);
+		canvas.SetActive(false);
 		animator.SetTrigger("Awake");
 		StartCoroutine(launchGame());
 	}
 
-        public void yawn(){
-            Debug.Log("Yawn");
-        }
+	public void quit(){
+		Application.Quit();
+	}
+
+	public void showCredit() {
+		creditCanvas.SetActive(true);
+		canvas.SetActive(false);
+		creditButton.GetComponent<Image>().GetComponent<CanvasRenderer>().SetAlpha(0.0f);
+		creditText.CrossFadeAlpha(0.0f, 0.0f, false);
+		creditImage.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
+		creditText.CrossFadeAlpha(1.0f, 1.0f, false);
+		creditButton.GetComponent<Image>().CrossFadeAlpha(1.0f, 1.0f, false);
+		creditImage.CrossFadeAlpha(1.0f, 0.5f, false);
+	}
+
+	public void hideCredit() {
+		creditText.CrossFadeAlpha(0.0f, 0.25f, false);
+		creditButton.GetComponent<Image>().GetComponent<CanvasRenderer>().SetAlpha(1.0f);
+		creditButton.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.25f, false);
+		creditImage.GetComponent<CanvasRenderer>().SetAlpha(1.0f);
+		creditImage.CrossFadeAlpha(0.0f, 0.5f, false);
+		StartCoroutine(hideCreditCoroutine());
+	}
+
+	public IEnumerator hideCreditCoroutine(){
+		yield return new WaitForSeconds(0.5f);
+		creditCanvas.SetActive(false);
+		canvas.SetActive(true);
+	}
+
+	public void yawn(){
+		Debug.Log("Yawn");
+	}
 
 	public IEnumerator launchGame(){
 		while(orchestraSound.volume > 0){

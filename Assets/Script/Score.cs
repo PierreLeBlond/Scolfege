@@ -10,7 +10,7 @@ public class Score : MonoBehaviour {
 	public Text scoreText;
 	public Text multiplicatorText;
 
-	public int comboThreshold = 2;
+	public int comboThreshold = 5;
 
 	private int _score = 0;
 	private int _numberOfChord;
@@ -33,7 +33,7 @@ public class Score : MonoBehaviour {
 	void Update () {
 		if(_blob)
 		{
-			if(multiplicatorText.fontSize < _blobTarget + 5)
+			if(multiplicatorText.fontSize < _blobTarget + 10)
 				multiplicatorText.fontSize++;
 			else
 				_blob = false;
@@ -109,7 +109,7 @@ public class Score : MonoBehaviour {
 			break;
 		}
 		multiplicatorText.color = color;
-		_blobTarget = _defaultSize + _comboMultiplicator*5;
+		_blobTarget = Mathf.Min(_defaultSize + _comboMultiplicator*5, 50);
 		_blob = true;
 	}
 
@@ -165,6 +165,9 @@ public class Score : MonoBehaviour {
 			}
 			else if(type == 4){
 				_scoreMultiplicator = 4;
+			}
+			else if(type == 5){
+				_scoreMultiplicator = 1;
 			}
 			updateScore();
 		}

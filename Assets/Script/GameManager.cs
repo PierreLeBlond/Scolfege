@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour {
 	public Bonus bonusPrefab;
 	public FlatAttaque flatAttaquePrefab;
 
-	public KeyPad keyPad;
+	public KeyPad gKeyPad;
+	public KeyPad fKeyPad;
 
 	public GameOver gameOver;
 	public AudioSource sountrack;
@@ -21,41 +22,69 @@ public class GameManager : MonoBehaviour {
 	public Info info;
 
 	public Vortex vortex;
-
 	public Tuto tuto;
 
-	public Collider2D topCollider;
-	public Collider2D bottomCollider;
-	public Collider2D tutoCollider;
 	public Collider2D leftCollider;
+
+	public TouchZone touchZoneShoot;
+	public TouchZone touchZoneUp;
+	public TouchZone touchZoneDown;
 
 	//The current chord
 	private Chord _chord;
+	public Chord getChord(){
+		return _chord;
+	}
+
 	private Level[] _levels;
 	private Gameplay _gameplay = new Gameplay(true, false, true, true, false, KeyEnum.GKey);
+	public Gameplay getGameplay()
+	{
+		return _gameplay;
+	}
 
 	private int _numberOfChord = 0;
 	private bool _gameIsOver = false;
 
 	private bool _generate = false;
+	private bool _commandReady = true;
 
 	private Bonus _bonus;
+	public Bonus getBonus()
+	{
+		return _bonus;
+	}
+
 	private FlatAttaque _flatAttaque;
+	public FlatAttaque getFlatAttaque(){
+		return _flatAttaque;
+	}
 	private bool _flatAttaqueAvailable = false;
+	public void setFlatAttaqueAvailable(bool b)
+	{
+		_flatAttaqueAvailable = b;
+	}
+
+	private int _probaBonus = 0;
 
 	// Use this for initialization
 	void Start () {
+		_bonus = Instantiate (bonusPrefab) as Bonus;
 
 		if (player) {
 			player.playerController.CurrentPositionId = 6;
 			player.transform.localPosition = new Vector3 (-2, -1, 0);
 		}
 
+		gKeyPad.create(KeyEnum.GKey);
+		fKeyPad.create(KeyEnum.FKey);
+
 		//_gameplay.pianoBonus = true;
 
 		//tuto.mobile = true;
 		generateLevels();
 		info.setGameplay(_gameplay);
+		player.setGameplay(_gameplay);
 		StartCoroutine(startGame());
 	}
 
@@ -69,12 +98,12 @@ public class GameManager : MonoBehaviour {
 		_levels[5] = new Level(new Vector2(3f, 0f), true, false, 2, 14);
 	}
 
-	public IEnumerator generateBonus() {
+	public void generateBonus() {
 		info.gameObject.SetActive(false);
-		_bonus = Instantiate (bonusPrefab) as Bonus;
 		_bonus.gameplay = _gameplay;
-		while(_bonus) yield return null;
-		_generate = true;
+		_bonus.reset();
+		//yield return new WaitUntil(() => !_bonus.gameObject.activeSelf);
+		//_generate = true;
 	}
 
 	public IEnumerator generateFlatAttaque() {
@@ -86,43 +115,65 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void generateChord () {
-
-		if(_numberOfChord > 3 && Random.Range(0, 3) == 1)
+		if(Random.Range(0, 4 + _probaBonus) >= 4)
 		{
-			if(Random.Range(0, 2) == 0 || !_flatAttaqueAvailable)
-				StartCoroutine(generateBonus());
+			_probaBonus = 0;
+			if(Random.Range(0, 3) > 0 || !_flatAttaqueAvailable || !_gameplay.defaultMode)
+			{
+				_flatAttaqueAvailable = true;
+				generateBonus();
+			}
 			else
+			{
+				_flatAttaqueAvailable = false;
 				StartCoroutine(generateFlatAttaque());
+			}
 		}else{
+			_probaBonus++;
 
-		_numberOfChord++;
-        player.playerUI.score.oneMoreChord();
+			_numberOfChord++;
+			player.playerUI.score.oneMoreChord();
 
-        _chord = Instantiate (chordPrefab) as Chord;
+			_chord = Instantiate (chordPrefab) as Chord;
 
-		Scrollable chordScroll = _chord.GetComponent<Scrollable>();
+			Scrollable chordScroll = _chord.GetComponent<Scrollable>();
 
-		_chord.setInfo(info);
-		_chord.setGameplay(_gameplay);
-		player.setGameplay(_gameplay);
+			_chord.setInfo(info);
+			_chord.setGameplay(_gameplay);
+			player.setGameplay(_gameplay);
 
-		if(player.Level < 6)
+			if(player.Level < 6)
 			_chord.generateNotes(_levels[player.Level]);
-		else{
-			_levels[5].scrollSpeed = new Vector2(3f + (player.Level - 5)*0.5f, 0.0f);
-			_chord.generateNotes(_levels[5]);
-		}
+			else{
+				_levels[5].scrollSpeed = new Vector2(3f + (player.Level - 5)*0.5f, 0.0f);
+				_chord.generateNotes(_levels[5]);
+			}
 		}
 
 		//player.playerController.GhostNote = _chord.GhostNote;
     }
 
+	public IEnumerator endGame(){
+		_gameIsOver = true;
+		sountrack.Stop();
+		player.playerController.movable = false;
+		playerUI.hide();
+		yield return new WaitForSeconds(1);
+		vortex.transform.localPosition = player.transform.localPosition;
+		vortex.scaleMax = 1.0f;
+		vortex.show();
+		yield return new WaitForSeconds(1);
+		player.playerAvatar.gameObject.SetActive(false);
+		yield return new WaitForSeconds(1);
+		vortex.hide();
+		yield return new WaitForSeconds(1);
+		gameOver.show();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (player.Life <= 0 && !_gameIsOver) {
-			gameOver.show();
-			_gameIsOver = true;
-			sountrack.Stop();
+			StartCoroutine(endGame());
 			//player.playerAvatar.gameOver();
 		}else if(!_gameIsOver)
 		{
@@ -131,7 +182,12 @@ public class GameManager : MonoBehaviour {
 				_generate = true;
 			}
 
-			if(_generate)
+			if(_bonus.isDestroyed){
+				_bonus.isDestroyed = false;
+				_generate = true;
+			}
+
+			if(_generate && _commandReady)
 			{
 				info.gameObject.SetActive(true);
 				generateChord();
@@ -146,14 +202,9 @@ public class GameManager : MonoBehaviour {
 
 	public IEnumerator startGame(){
 		player.playerController.movable = false;
-		tuto.hide();
-		tuto.continueGame();
 		playerUI.hide();
-		tuto.hideCommand();
 		player.playerAvatar.gameObject.SetActive(false);
-		Debug.Log("ping");
 		yield return new WaitForSeconds(1);
-		Debug.Log("pong");
 		vortex.scaleMax = 1.0f;
 		vortex.show();
 		yield return new WaitForSeconds(1);
@@ -162,152 +213,10 @@ public class GameManager : MonoBehaviour {
 		vortex.hide();
 		while(vortex.vortex.enabled) yield return null;
 		yield return new WaitForSeconds(1);
-		StartCoroutine(startTuto());
-		//StartCoroutine(generateFlatAttaque());
-		//enterPianoMode();
-		//generateChord();
-		player.playerController.movable = true;
-	}
-
-	public IEnumerator startTuto(){
 		sountrack.Play();
-		Time.timeScale = 0;
-		tuto.reverse(true);
-		tuto.show();
-		player.playerController.gameObject.SetActive(true);
-		tuto.wait();
-		while(!tuto.continueTuto) yield return null;
-		//1: Go up
-		tuto.nextState();
-		tuto.showCommand(Direction.UP);
-		Time.timeScale = 1;
-		while(!topCollider.IsTouching(player.GetComponent<Collider2D>())) yield return null;
-		//2: Go down
-		tuto.nextState();
-		tuto.showCommand(Direction.DOWN);
-		while(!bottomCollider.IsTouching(player.GetComponent<Collider2D>())) yield return null;
-		//3: Shoot
-		tuto.nextState();
-		tuto.showCommand(Direction.RIGHT);
-		player.reload();
-		while(player.isLoaded()) yield return null;
-		//4: learn notes
-		tuto.nextState();
-		tuto.hideCommand();
-		tuto.reverse(false);
-		tuto.wait();
-		info.setGameplay(_gameplay);
-		while(!tuto.continueTuto)
-		{
-			info.setNote(player.playerController.CurrentPositionId);
-			yield return null;
-		}
-		tuto.hide();
+		player.playerController.movable = true;
+		yield return StartCoroutine(tuto.chooseTuto());
 		generateChord();
-		//end first part of tuto
-		while(!tutoCollider.IsTouching(_chord.GetComponent<Collider2D>())) yield return null;
-		//explain basic gameplay
-		//5: show notes
-		yield return null;
-		Time.timeScale = 0;
-		tuto.show();
-		tuto.hideCommand();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		//6: explain projectile or touch
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		//7: explain score
-		playerUI.showScore();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		//8: explain life
-		playerUI.showLife();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		//9: ready ?
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		Time.timeScale = 1;
-		tuto.hide();
-		//end notes tuto
-		while(!_bonus || !tutoCollider.IsTouching(_bonus.GetComponent<Collider2D>())) yield return null;
-		yield return null;
-		//10: enter bonus
-		Time.timeScale = 0;
-		tuto.show();
-		tuto.hideCommand();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		//11: explain key bonus type
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		Time.timeScale = 1;
-		tuto.hide();
-		_flatAttaqueAvailable = true;
-		//end first bonus explain
-		while(!_flatAttaque) yield return null;
-		yield return null;
-		//explain flat attaque
-		Time.timeScale = 0;
-		tuto.show();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		Time.timeScale = 1;
-		tuto.hide();
-		_gameplay.blindBonus = true;
-		while(!_bonus || _bonus.getBonusType() != 2 || !_bonus.GetComponent<Collider2D>().IsTouching(player.GetComponent<Collider2D>())) yield return null;
-		yield return null;
-		//explain second bonus
-		Time.timeScale = 0;
-		tuto.show();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		Time.timeScale = 1;
-		tuto.hide();
-		_gameplay.soundBonus = true;
-		_gameplay.blindBonus = false;
-		//end second bonus explain
-		while(!_bonus || _bonus.getBonusType() != 3 || !_bonus.GetComponent<Collider2D>().IsTouching(player.GetComponent<Collider2D>())) yield return null;
-		yield return null;
-		Time.timeScale = 0;
-		tuto.show();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		Time.timeScale = 1;
-		tuto.hide();
-		_gameplay.pianoBonus = true;
-		_gameplay.soundBonus = false;
-		//end third bonus explain
-		while(!_bonus || _bonus.getBonusType() != 4 || !_bonus.GetComponent<Collider2D>().IsTouching(player.GetComponent<Collider2D>())) yield return null;
-		yield return null;
-		Time.timeScale = 0;
-		tuto.show();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		tuto.hide();
-		player.playerController.movable = false;
-		yield return new WaitForSeconds(2);
-		tuto.show();
-		tuto.wait();
-		tuto.nextState();
-		while(!tuto.continueTuto) yield return null;
-		tuto.hide();
-		Time.timeScale = 1;
-		_gameplay.blindBonus = true;
-		_gameplay.pianoBonus = true;
-		_gameplay.soundBonus = true;
 	}
 
 	public void changeKey(){
@@ -320,6 +229,11 @@ public class GameManager : MonoBehaviour {
 		{
 			key.setFKey();
 			_gameplay.key = KeyEnum.FKey;
+		}
+
+		if(_gameplay.piano)
+		{
+			StartCoroutine(switchPiano());
 		}
 
 		_chord.setGameplay(_gameplay);
@@ -337,23 +251,53 @@ public class GameManager : MonoBehaviour {
 		_gameplay.defaultMode = false;
 	}
 
-	public void enterPianoMode(){
+	public IEnumerator enterPianoMode(){
+		_commandReady = false;
 		player.playerController.movable = false;
+		touchZoneUp.gameObject.SetActive(false);
+		touchZoneDown.gameObject.SetActive(false);
 		_gameplay.piano = true;
-		StartCoroutine(keyPad.show());
 		_gameplay.defaultMode = false;
+		if(_gameplay.key == KeyEnum.FKey)
+			yield return StartCoroutine(fKeyPad.show());
+		else if(_gameplay.key == KeyEnum.GKey)
+			yield return StartCoroutine(gKeyPad.show());
+		_commandReady = true;
+	}
+
+	public IEnumerator switchPiano(){
+		if(_gameplay.key == KeyEnum.FKey)
+		{
+			while(!_chord) yield return null;
+			_chord.pause();
+			StartCoroutine(gKeyPad.hide());
+			yield return StartCoroutine(fKeyPad.show());
+			_chord.play();
+		}else if(_gameplay.key == KeyEnum.GKey)
+		{
+			while(!_chord) yield return null;
+			_chord.pause();
+			StartCoroutine(fKeyPad.hide());
+			yield return StartCoroutine(gKeyPad.show());
+			_chord.play();
+		}
 	}
 
 	public void enterDefaultMode(){
 		player.playerController.movable = true;
-		_gameplay.defaultMode = true;
 		_gameplay.hint = true;
 		_gameplay.sound = false;
 		_gameplay.text = true;
 		if(_gameplay.piano){
 			_gameplay.piano = false;
-			StartCoroutine(keyPad.hide());
+			if(_gameplay.key == KeyEnum.FKey)
+				StartCoroutine(fKeyPad.hide());
+			else if(_gameplay.key == KeyEnum.GKey)
+				StartCoroutine(gKeyPad.hide());
+			touchZoneUp.gameObject.SetActive(true);
+			touchZoneDown.gameObject.SetActive(true);
 		}
+		_gameplay.defaultMode = true;
 	}
 
 	public void quitGame()

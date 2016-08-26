@@ -9,20 +9,18 @@ public class GameOver : MonoBehaviour {
 	public SpriteRenderer panel;
 	public AudioSource audioSource;
 
+	public GameObject canvas;
+
 	private bool _show;
 	private float _showTime;
 
 	// Use this for initialization
 	void Start () {
-
+		canvas.SetActive(false);
 	}
 
 	// Update is called once per frame
-	void Update () {
-	}
-
-	// Update is called once per frame
-	void FixedUpdate () {
+	/*void FixedUpdate () {
 		if(_show)
 		{
 			float time = Time.time - _showTime;
@@ -33,12 +31,25 @@ public class GameOver : MonoBehaviour {
 				_show = false;
 			}
 		}
-	}
+	}*/
 
 	public void show () {
-		_show = true;
+		/*_show = true;
 		_showTime = Time.time;
-		tryAgainButton.interactable = true;
+		tryAgainButton.interactable = true;*/
+		canvas.SetActive(true);
 		audioSource.Play();
+	}
+
+	public void restart(){
+		Application.LoadLevel("_NoteGame");
+	}
+
+	public void returnToMenu(){
+		Application.LoadLevel("_Menu");
+	}
+
+	public void quit(){
+		Application.Quit();
 	}
 }

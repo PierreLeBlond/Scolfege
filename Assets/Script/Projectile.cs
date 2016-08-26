@@ -49,6 +49,11 @@ public class Projectile : MonoBehaviour {
 			player.chordIntruder(intruder, id);
 		}
 
+		if(intruder.CompareTag("Bonus"))
+		{
+			player.bonusIntruder(intruder);
+		}
+
 		/*if (intruder.CompareTag("Bonus"))
         {
 			player.OnTriggerEnter2D(intruder);

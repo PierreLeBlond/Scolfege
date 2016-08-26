@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public struct Gameplay{
+public class Gameplay{
 	public bool defaultMode;
 	public bool sound;
 	public bool text;
@@ -9,8 +9,20 @@ public struct Gameplay{
 	public bool piano;
 
 	public bool soundBonus;
+	public void setSoundBonus(bool b)
+	{
+		soundBonus = b;
+	}
 	public bool blindBonus;
+	public void setBlindBonus(bool b)
+	{
+		blindBonus = b;
+	}
 	public bool pianoBonus;
+	public void setPianoBonus(bool b)
+	{
+		pianoBonus = b;
+	}
 
 	public KeyEnum key;
 

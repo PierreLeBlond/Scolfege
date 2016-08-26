@@ -37,8 +37,6 @@ public class Chord : MonoBehaviour {
 
 	//Note prefab
 	public Note 				notePrefab;
-	//Line prefeb, for note outside of the scope
-	public NoteLinePrefab 		linePrefab;
 
 	private List<Note> 			_notes = new List<Note>();
 	private int 				_rightNoteId;
@@ -97,7 +95,7 @@ public class Chord : MonoBehaviour {
 			note = Instantiate (notePrefab) as Note;
 			note.transform.localPosition = new Vector3 (0f, staveOffset + noteId * staveInterval, 0.0f);
 			int k = 0;
-			while (noteId < 3 - k || noteId > 13 + k) {
+			/*while (noteId < 3 - k || noteId > 13 + k) {
 				NoteLinePrefab line = Instantiate (linePrefab) as NoteLinePrefab;
 				if (noteId < 3 - k)
 				line.transform.localPosition = new Vector3 (0f, staveOffset + (2 - k) * staveInterval, 0f);
@@ -105,13 +103,19 @@ public class Chord : MonoBehaviour {
 				line.transform.localPosition = new Vector3 (0f, staveOffset + (14 + k) * staveInterval, 0f);
 				k += 2;
 				line.transform.parent = transform;
+			}*/
+
+			if(noteId < 3 || noteId > 13)
+			{
+				note.setNoteOut();
 			}
+
 			note.transform.parent = transform;
 			_notes.Add (note);
 			note.setNoteId (noteId);
 
 			if(!_gameplay.hint){
-				note.noteSprite.GetComponent<SpriteRenderer>().enabled = false;
+				note.sprite.enabled = false;
 			}
 
 
@@ -169,14 +173,14 @@ public class Chord : MonoBehaviour {
 						note.GetComponent<Scrollable>().speed = new Vector2(0.5f, 0.5f);
 						note.GetComponent<Scrollable>().direction = new Vector2(scoreTarget.x - note.transform.localPosition.x, scoreTarget.y - note.transform.localPosition.y);
 						result = Result.Win;
-						note.noteSprite.GetComponent<SpriteRenderer>().enabled = true;
+						note.sprite.enabled = true;
 					}else{
 						note.paint (Color.red);
 						note.GetComponent<Rigidbody2D>().isKinematic = false;
 						result = Result.Loose;
-						note.noteSprite.GetComponent<SpriteRenderer>().enabled = true;
+						note.sprite.enabled = true;
 						_rightNote.paint(Color.yellow);
-						_rightNote.noteSprite.GetComponent<SpriteRenderer>().enabled = true;
+						_rightNote.sprite.enabled = true;
 					}
 				}
 			}
@@ -190,7 +194,7 @@ public class Chord : MonoBehaviour {
 		}
 		else
 		{
-			_rightNote.noteSprite.GetComponent<SpriteRenderer>().enabled = true;
+			_rightNote.sprite.enabled = true;
 			if(noteId%7 == _rightNoteId%7)
 			{
 				_rightNote.transform.localPosition = new Vector3 (0f, staveOffset + noteId * staveInterval, 0.0f);
@@ -199,7 +203,7 @@ public class Chord : MonoBehaviour {
 				_rightNote.GetComponent<Scrollable>().speed = new Vector2(0.5f, 0.5f);
 				_rightNote.GetComponent<Scrollable>().direction = new Vector2(scoreTarget.x - _rightNote.transform.localPosition.x, scoreTarget.y - _rightNote.transform.localPosition.y);
 				result = Result.Win;
-				_rightNote.noteSprite.GetComponent<SpriteRenderer>().enabled = true;
+				_rightNote.sprite.enabled = true;
 			}else{
 				Note note = Instantiate (notePrefab) as Note;
 				note.transform.parent = transform;
@@ -209,7 +213,7 @@ public class Chord : MonoBehaviour {
 				note.GetComponent<FadableToDeath>().startFadingToDeath();
 				result = Result.Loose;
 				_rightNote.paint(Color.yellow);
-				_rightNote.noteSprite.GetComponent<SpriteRenderer>().enabled = true;
+				_rightNote.sprite.enabled = true;
 			}
 
 			blindSprite.transform.parent = null;
@@ -262,5 +266,15 @@ public class Chord : MonoBehaviour {
 			isDisabled = true;
 			StartCoroutine(destroy());
 		}
+	}
+
+	public void pause()
+	{
+		GetComponent<Scrollable>().pause();
+	}
+
+	public void play()
+	{
+		GetComponent<Scrollable>().play();
 	}
 }

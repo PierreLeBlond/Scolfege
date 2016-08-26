@@ -13,6 +13,8 @@ public class FlatAttaque : MonoBehaviour {
 
 	public int safe = 0;
 
+	private bool _pause = false;
+
 	// Use this for initialization
 	void Start () {
 		_flats = new Flat[13];
@@ -32,19 +34,32 @@ public class FlatAttaque : MonoBehaviour {
 	}
 
 	public IEnumerator run(){
-		for(int i = 0; i < 4;i++)
+		for(int i = 0; i < 3;)
 		{
 			warning.enabled = true;
 			yield return new WaitForSeconds(0.5f);
 			warning.enabled = false;
 			yield return new WaitForSeconds(0.5f);
+			if(!_pause)
+				++i;
 		}
 
 		while(!GetComponent<Collider2D>().IsTouching(limit))
 		{
-			transform.localPosition = transform.localPosition - new Vector3(0.2f, 0f, 0f);
+			if(!_pause)
+				transform.localPosition = transform.localPosition - new Vector3(0.2f, 0f, 0f);
 			yield return null;
 		}
 		Destroy(gameObject);
+	}
+
+	public void pause()
+	{
+		_pause = true;
+	}
+
+	public void play()
+	{
+		_pause = false;
 	}
 }
