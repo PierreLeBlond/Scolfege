@@ -28,6 +28,7 @@ public class MenuManager : MonoBehaviour {
 	public Button creditButton;
 	public Text creditText;
 	public Image creditImage;
+	public GameObject logoEnsiie;
 
 	private float _scaleFactor = 0f;
 
@@ -69,6 +70,8 @@ public class MenuManager : MonoBehaviour {
 	public void showCredit() {
 		creditCanvas.SetActive(true);
 		canvas.SetActive(false);
+		creditButton.gameObject.SetActive(true);
+		logoEnsiie.gameObject.SetActive(true);
 		creditButton.GetComponent<Image>().GetComponent<CanvasRenderer>().SetAlpha(0.0f);
 		creditText.CrossFadeAlpha(0.0f, 0.0f, false);
 		creditImage.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
@@ -79,8 +82,10 @@ public class MenuManager : MonoBehaviour {
 
 	public void hideCredit() {
 		creditText.CrossFadeAlpha(0.0f, 0.25f, false);
-		creditButton.GetComponent<Image>().GetComponent<CanvasRenderer>().SetAlpha(1.0f);
-		creditButton.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.25f, false);
+		//creditButton.GetComponent<Image>().GetComponent<CanvasRenderer>().SetAlpha(1.0f);
+		//creditButton.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.25f, false);
+		creditButton.gameObject.SetActive(false);
+		logoEnsiie.gameObject.SetActive(false);
 		creditImage.GetComponent<CanvasRenderer>().SetAlpha(1.0f);
 		creditImage.CrossFadeAlpha(0.0f, 0.5f, false);
 		StartCoroutine(hideCreditCoroutine());

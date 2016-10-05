@@ -249,6 +249,7 @@ public class GameManager : MonoBehaviour {
 		_gameplay.sound = true;
 		_gameplay.text = false;
 		_gameplay.defaultMode = false;
+		info.transform.localPosition = new Vector3(0.0f, -400.0f, 0.0f);
 	}
 
 	public IEnumerator enterPianoMode(){
@@ -298,6 +299,7 @@ public class GameManager : MonoBehaviour {
 			touchZoneDown.gameObject.SetActive(true);
 		}
 		_gameplay.defaultMode = true;
+		info.transform.localPosition = new Vector3(0.0f, 400.0f, 0.0f);
 	}
 
 	public void quitGame()

@@ -68,21 +68,21 @@ public class Tuto : MonoBehaviour {
 
 		messages = new String[19];
 		messages[0] = mobile?"Vous voila à l'intérieur d'une partition ! Appuyez ici pour continuer.":"Vous voila à l'intérieur d'une partition ! Appuyez sur espace pour continuer.";
-		messages[1] = "Déplacez vous vers le haut pour atteindre la partie supérieur de la portée.";
-		messages[2] = "Déplacez vous maintenant vers le bas pour atteindre la partie inférieur.";
+		messages[1] = "Atteignez la partie supérieure de la portée.";
+		messages[2] = "Atteignez la partie inférieure.";
 		messages[3] = mobile?"Touchez la portée pour jouer la note, et lancer un projectile.":"Appuyez sur la fleche directionnelle droite pour jouer la note, et lancer un projectile.";
-		messages[4] = "Le nom des notes s'affichent en haut de l'écran, prenez le temps de les apprendre avant de continuer.";
+		messages[4] = "Le nom des notes s'affiche en haut de l'écran, prenez le temps de les apprendre avant de continuer.";
 		messages[5] = "Le nom affiché en haut de l'écran correspond à l'une de ces notes, à vous de trouver la bonne.";
 		messages[6] = "Lancez un projectile ou attendez de rencontrer la note que vous souhaitez choisir.";
 		messages[7] = "Si celle ci correspond au nom en haut de l'écran, vous gagnerez des points !";
 		messages[8] = "Mais si vous vous trompez, ou si vous ne choisissez pas assez vite, vous perdrez de la vie...";
 		messages[9] = "Prêt ?";
 		messages[10] = "Parfois, des bonus peuvent apparaître : ils rapportent des points ou des multiplicateurs de score !";
-		messages[11] = "Mais ils rendent aussi le jeu plus difficile ! A vous de voir si cela vaut la peine de le prendre.";
+		messages[11] = "Mais ils rendent aussi le jeu plus difficile ! A vous de voir si cela vaut la peine de les prendre.";
 		messages[12] = "Ce bonus ci change la clé de sol en clé de fa.";
-		messages[13] = "Vous feriez bien de vous mettre à l'abri à la note indiqué !";
-		messages[14] = "Ce bonus ne permet plus de voir les choix de notes, il faut trouver du premier coup !";
-		messages[15] = mobile?"Ce bonus ne permet plus de voir le nom de la note, touchez l'icone en haut pour jouer le son à la place !":"Ce bonus ne permet plus de voir le nom de la note, touchez l'icone en haut pour jouer le son à la place !";
+		messages[13] = "Vous feriez bien de vous mettre à l'abri à la note indiquée !";
+		messages[14] = "Ce bonus ne permet plus de voir les trois notes possibles !";
+		messages[15] = mobile?"Ce bonus ne permet plus de voir le nom de la note, touchez l'icone en bas pour jouer le son à la place !":"Ce bonus ne permet plus de voir le nom de la note, touchez l'icone en bas pour jouer le son à la place !";
 		messages[16] = "Vous vous deplacez maintenant à l'aide d'un clavier de piano !";
 		messages[17] = mobile?"Touchez le clavier pour vous deplacer sur la partition":"Appuyez sur les touches du clavier pour vous deplacer sur la partition, et sur la portée pour jouer une note.";
 		messages[18] = "Ce bonus permet d'annuler le bonus actuel, par exemple si le jeu devient trop difficile.";
@@ -208,7 +208,7 @@ public class Tuto : MonoBehaviour {
 	}
 
 	public IEnumerator startTuto(){
-		place(1);
+		place(4);
 		yield return StartCoroutine(show());
 		gameManager.player.playerController.gameObject.SetActive(true);
 		wait();
@@ -216,7 +216,7 @@ public class Tuto : MonoBehaviour {
 		//1: Go up
 		yield return StartCoroutine(hide());
 		_state = 1;
-		place(2);
+		//place(2);
 		yield return StartCoroutine(show());
 		blinkingButton.stop();
 		gameManager.touchZoneUp.gameObject.SetActive(true);
@@ -226,7 +226,7 @@ public class Tuto : MonoBehaviour {
 		//2: Go down
 		yield return StartCoroutine(hide());
 		_state = 2;
-		place(3);
+		//place(3);
 		yield return StartCoroutine(show());
 		blinkingButton.stop();
 		gameManager.touchZoneDown.gameObject.SetActive(true);
@@ -382,12 +382,14 @@ public class Tuto : MonoBehaviour {
 		bonus.pause();
 		wait();
 		_state = 15;
+		place(1);
 		yield return StartCoroutine(show());
 		while(!continueTuto) yield return null;
 		bonus.play();
 		yield return StartCoroutine(hide());
 		gameManager.getGameplay().setPianoBonus(true);
 		gameManager.getGameplay().setSoundBonus(false);
+		place(4);
 	}
 
 	public IEnumerator explainPianoBonus(){
@@ -396,9 +398,10 @@ public class Tuto : MonoBehaviour {
 		yield return null;
 		//Time.timeScale = 0;
 		bonus.pause();
-		place(0);
+		//place(0);
 		wait();
 		_state = 16;
+		place(1);
 		yield return StartCoroutine(show());
 		while(!continueTuto) yield return null;
 		yield return StartCoroutine(hide());
@@ -414,6 +417,7 @@ public class Tuto : MonoBehaviour {
 		gameManager.getGameplay().setBlindBonus(true);
 		gameManager.getGameplay().setPianoBonus(true);
 		gameManager.getGameplay().setSoundBonus(true);
+		place(4);
 	}
 
 	public IEnumerator explainBecarreBonus(){

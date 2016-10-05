@@ -38,7 +38,18 @@ public class PlayerAvatar : MonoBehaviour {
 
     public void win()
     {
-		playerAnimator.SetTrigger("Win");
+		switch(Random.Range(0, 2))
+		{ 
+			case 0 :
+			playerAnimator.SetTrigger("Dab");
+			break;
+			case 1 :
+			playerAnimator.SetTrigger("Win");
+			break;
+			default:
+			playerAnimator.SetTrigger("Win");
+			break;
+		}
 		_playerState = PlayerState.WIN;
 		smile();
         StartCoroutine(defaultState());
